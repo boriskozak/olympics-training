@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PEAKS → PODIUM | Cleo & Lila's Olympic Journey</title>
-    <meta name="description" content="Track Cleo and Lila's snowboard progression from beginner to the 2034 Winter Olympics in Salt Lake City.">
+    <meta name="description"
+        content="Track Cleo and Lila's snowboard progression from beginner to the 2034 Winter Olympics in Salt Lake City.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <canvas id="snow-canvas"></canvas>
 
@@ -18,8 +23,9 @@
         <div class="nav-links">
             <a href="#hero">Home</a>
             <a href="#riders">Riders</a>
+            <a href="#daily-challenge-section">Challenges</a>
             <a href="#progression">Training</a>
-            <a href="#skill-tree">Skills</a>
+            <a href="#achievements">Badges</a>
             <a href="#session-log">Log</a>
         </div>
     </nav>
@@ -50,10 +56,18 @@
                 <div class="rider-avatar">🏂</div>
                 <h3>Cleo</h3>
                 <span class="rider-stance">Regular</span>
+                <div class="rider-stats">
+                    <div class="stat"><span class="stat-icon">🔥</span> Streak: <strong id="cleo-streak">0</strong> days
+                    </div>
+                    <div class="stat"><span id="cleo-level">Level 1</span></div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" id="cleo-xp"></div>
+                    </div>
+                </div>
                 <div class="progress-ring-wrap">
                     <svg class="progress-ring" viewBox="0 0 120 120">
-                        <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
-                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="cleo"/>
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="cleo" />
                     </svg>
                     <span class="progress-pct" id="cleo-pct">0%</span>
                 </div>
@@ -73,10 +87,18 @@
                 <div class="rider-avatar">🏂</div>
                 <h3>Lila</h3>
                 <span class="rider-stance">Regular</span>
+                <div class="rider-stats">
+                    <div class="stat"><span class="stat-icon">🔥</span> Streak: <strong id="lila-streak">0</strong> days
+                    </div>
+                    <div class="stat"><span id="lila-level">Level 1</span></div>
+                    <div class="xp-bar">
+                        <div class="xp-fill" id="lila-xp"></div>
+                    </div>
+                </div>
                 <div class="progress-ring-wrap">
                     <svg class="progress-ring" viewBox="0 0 120 120">
-                        <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
-                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="lila"/>
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="lila" />
                     </svg>
                     <span class="progress-pct" id="lila-pct">0%</span>
                 </div>
@@ -94,10 +116,34 @@
         </div>
     </section>
 
+    <!-- DAILY CHALLENGE -->
+    <section id="daily-challenge-section">
+        <h2 class="section-title">Today's Challenge</h2>
+        <p class="section-sub">Complete today's mission on the mountain! 🏔️</p>
+        <div id="daily-challenge" class="challenge-grid">
+            <div class="challenge-card" data-rider="cleo">
+                <div class="challenge-rider">Cleo's Mission</div>
+                <p class="challenge-text">Loading...</p>
+                <div class="challenge-footer">
+                    <span class="challenge-xp">+10 XP</span>
+                    <button class="challenge-complete-btn">Complete!</button>
+                </div>
+            </div>
+            <div class="challenge-card" data-rider="lila">
+                <div class="challenge-rider">Lila's Mission</div>
+                <p class="challenge-text">Loading...</p>
+                <div class="challenge-footer">
+                    <span class="challenge-xp">+10 XP</span>
+                    <button class="challenge-complete-btn">Complete!</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PROGRESSION TIMELINE -->
     <section id="progression">
         <h2 class="section-title">The 8-Phase Journey</h2>
-        <p class="section-sub">From falling leaf to Olympic podium — one phase at a time.</p>
+        <p class="section-sub">Tap any skill's 💡 for tips, drills & video tutorials!</p>
         <div class="timeline" id="timeline-container"></div>
     </section>
 
@@ -110,6 +156,17 @@
             <button class="tree-rider-btn" data-rider="lila">Lila</button>
         </div>
         <div class="skill-tree-container" id="skill-tree-vis"></div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section id="achievements">
+        <h2 class="section-title">Achievement Badges</h2>
+        <p class="section-sub">Unlock badges by hitting milestones! 🏅</p>
+        <div class="tree-controls">
+            <button class="badge-rider-btn active" data-rider="cleo">Cleo</button>
+            <button class="badge-rider-btn" data-rider="lila">Lila</button>
+        </div>
+        <div id="achievements-grid" class="achievements-grid"></div>
     </section>
 
     <!-- SESSION LOG -->
@@ -156,5 +213,7 @@
     </footer>
 
     <script src="app.js"></script>
+    <script src="interactive.js"></script>
 </body>
+
 </html>
