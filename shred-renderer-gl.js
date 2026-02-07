@@ -405,7 +405,7 @@ const SHADERS = {
 
             if (type == 0) { // PLAYER - HUMANIZED
                 // Adjust coordinates for the new model
-                vec2 p = vUv;
+                vec2 p = vUv + vec2(0.0, 0.5); // Shift up to align board with previous anchor
                 
                 // Animation / Wobble effect for dynamic feel
                 float lean = -sin(vWobble) * 0.1; 

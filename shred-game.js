@@ -78,12 +78,13 @@
                 const d = imgData.data;
                 for (let i = 0; i < d.length; i += 4) {
                     const r = d[i], g = d[i + 1], b = d[i + 2];
-                    // Remove bright green (chroma key)
-                    if (g > 150 && r < 150 && b < 150) {
-                        d[i + 3] = 0; // fully transparent
-                    } else if (g > 120 && g > r * 1.2 && g > b * 1.2) {
-                        // Semi-green edge pixels — make semi-transparent
-                        d[i + 3] = Math.floor(d[i + 3] * 0.3);
+                    // Remove bright green (chroma key) — aggressive
+                    if (g > 100 && g > r * 1.1 && g > b * 1.1) {
+                        d[i + 3] = 0;
+                    } else if (g > 80 && g > r && g > b) {
+                        // Edge fringe — fade out
+                        const greenness = (g - Math.max(r, b)) / g;
+                        d[i + 3] = Math.floor(d[i + 3] * Math.max(0, 1 - greenness * 3));
                     }
                 }
                 octx.putImageData(imgData, 0, 0);
@@ -484,13 +485,13 @@
             const sway = Math.sin(frameCount * 0.08) * (speed * 5);
             const tx = tilt * 40 + sway;
 
-            // Sprite sizing — fill bottom ~55% of screen
-            const spriteH = h * 0.58;
+            // Sprite sizing — fill bottom ~65% of screen
+            const spriteH = h * 0.68;
             const aspect = this.riderCanvas.width / this.riderCanvas.height;
             const spriteW = spriteH * aspect;
 
             const drawX = cx - spriteW / 2 + tx;
-            const drawY = h - spriteH + 20; // slightly below bottom so head is visible but feet extend off
+            const drawY = h - spriteH + 40; // push down so board is near bottom edge
 
             ctx.save();
 
