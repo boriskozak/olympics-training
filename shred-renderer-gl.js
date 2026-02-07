@@ -370,11 +370,14 @@ const SHADERS = {
         in float vDepth;
         out vec4 fragColor;
 
+        // SDF Primitives
         float sdCircle(vec2 p, float r) { return length(p) - r; }
+        
         float sdBox(vec2 p, vec2 b) {
             vec2 d = abs(p) - b;
             return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
         }
+        
         float sdTri(vec2 p, float r) {
             const float k = sqrt(3.0);
             p.x = abs(p.x) - r;
@@ -384,26 +387,112 @@ const SHADERS = {
             return -length(p) * sign(p.y);
         }
 
+        float sdCapsule(vec2 p, vec2 a, vec2 b, float r) {
+            vec2 pa = p - a, ba = b - a;
+            float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+            return length(pa - ba * h) - r;
+        }
+
+        float smin(float a, float b, float k) {
+            float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+            return mix(b, a, h) - k * h * (1.0 - h);
+        }
+
         void main() {
-            // ... (Same Procedural Logic, simpler for perf)
             vec3 col = vec3(0.0);
             float alpha = 0.0;
             int type = int(vType + 0.5);
 
-            if (type == 0) { // PLAYER
-                // Back view of snowboarder
-                float body = sdBox(vUv - vec2(0.0, 0.1), vec2(0.3, 0.4));
-                float head = sdCircle(vUv - vec2(0.0, 0.6), 0.25);
-                float board = sdBox(vUv - vec2(0.0, -0.4), vec2(0.8, 0.1 + abs(sin(vWobble))*0.1)); // Board wobbles
-
-                if (head < 0.0) { col = vec3(1.0, 0.8, 0.6); alpha = 1.0; }
-                else if (body < 0.0) { col = vec3(0.2, 0.5, 0.9); alpha = 1.0; }
-                else if (board < 0.0) { col = vec3(0.2); alpha = 1.0; }
+            if (type == 0) { // PLAYER - HUMANIZED
+                // Adjust coordinates for the new model
+                vec2 p = vUv;
                 
-                // Scarf
-                 if (vUv.x > 0.3 && vUv.y < 0.5 && vUv.y > 0.2) {
-                    col = vec3(1.0, 0.1, 0.1); alpha = 1.0;
-                 }
+                // Animation / Wobble effect for dynamic feel
+                float lean = -sin(vWobble) * 0.1; 
+                
+                // 1. Snowboard (Bottom)
+                vec2 boardP = p - vec2(0.0, -1.2);
+                float board = sdBox(boardP, vec2(1.1, 0.12)); // Board deck
+                
+                // Bindings
+                float bindings = sdBox(p - vec2(-0.4, -1.1), vec2(0.15, 0.05));
+                bindings = min(bindings, sdBox(p - vec2(0.4, -1.1), vec2(0.15, 0.05)));
+
+                // 2. Legs (Pants) - Squatting stance for snowboarding
+                // Knees bent outward slightly
+                float legL = sdCapsule(p, vec2(-0.4, -1.1), vec2(-0.25, -0.5), 0.18);
+                float legR = sdCapsule(p, vec2(0.4, -1.1), vec2(0.25, -0.5), 0.18);
+                float legs = smin(legL, legR, 0.15);
+
+                // 3. Torso (Jacket)
+                float torso = sdCapsule(p, vec2(0.0, -0.5), vec2(0.0, 0.2), 0.24);
+                float bodyKey = smin(legs, torso, 0.1);
+
+                // 4. Arms - Out for balance
+                float armL = sdCapsule(p, vec2(-0.15, 0.15), vec2(-0.6, -0.2), 0.12);
+                float armR = sdCapsule(p, vec2(0.15, 0.15), vec2(0.6, -0.2), 0.12);
+                float upperBody = smin(bodyKey, smin(armL, armR, 0.1), 0.05);
+
+                // 5. Head & Neck
+                float head = sdCircle(p - vec2(0.0, 0.55), 0.22);
+                float neck = sdCapsule(p, vec2(0.0, 0.2), vec2(0.0, 0.5), 0.15);
+                float fullBody = smin(upperBody, neck, 0.1);
+
+                // Scarf logic
+                float scarfShape = sdCapsule(p, vec2(0.1, 0.35), vec2(0.6 + lean*2.0, 0.4 + lean), 0.08);
+
+                // --- Drawing Layers ---
+
+                // Draw Body (Jacket + Pants)
+                if (fullBody < 0.0) {
+                    // Pants (Lower)
+                    if (p.y < -0.4) {
+                        col = vec3(0.15, 0.16, 0.2); // Dark Tech Pants
+                        // Knee reinforcement
+                        if (sdCircle(p - vec2(-0.3, -0.8), 0.08) < 0.0) col *= 0.8;
+                        if (sdCircle(p - vec2(0.3, -0.8), 0.08) < 0.0) col *= 0.8;
+                    } else {
+                        // Jacket (Upper)
+                        col = vec3(0.9, 0.35, 0.1); // High-vis Orange Jacket
+                        // Zipper detail
+                        if (abs(p.x) < 0.02) col = vec3(0.1);
+                    }
+                    alpha = 1.0;
+                }
+
+                // Draw Head (Helmet + Goggles)
+                if (head < 0.0) {
+                    col = vec3(0.2, 0.2, 0.22); // Matte Black Helmet
+                    // Goggles
+                    float goggles = sdBox(p - vec2(0.0, 0.55), vec2(0.16, 0.06));
+                    if (goggles < 0.0) {
+                        col = vec3(1.0, 0.7, 0.1); // Amber lens
+                        // Goggle Reflection
+                        col += vec3(0.9) * step(0.0, p.x + p.y - 0.5) * 0.5; 
+                    }
+                    alpha = 1.0;
+                }
+
+                // Draw Scarf
+                if (scarfShape < 0.0) {
+                    col = vec3(0.8, 0.1, 0.1); 
+                    alpha = 1.0;
+                }
+
+                // Draw Board
+                if (board < 0.0) {
+                    col = vec3(0.1, 0.5, 0.8); // Cyan/Blue Board
+                    // Board graphic stripe
+                    if (abs(p.x) < 0.15) col = vec3(0.9); 
+                    alpha = 1.0;
+                }
+                
+                // Draw Bindings
+                if (bindings < 0.0) {
+                    col = vec3(0.1); // Black bindings
+                    alpha = 1.0;
+                }
+
             } else if (type == 1) { // TREE
                 float t = sdTri(vUv, 0.7);
                 float trunk = sdBox(vUv - vec2(0.0, -0.7), vec2(0.1, 0.3));
@@ -412,7 +501,7 @@ const SHADERS = {
             } else if (type == 2) { // ROCK
                  if (length(vUv) < 0.7) { col = vec3(0.5); alpha=1.0; }
             } else if (type == 3) { // BEAR
-                 if (length(vUv) < 0.6) { col = vec3(0.4, 0.2, 0.1); alpha=1.0; } // Blob bear
+                 if (length(vUv) < 0.6) { col = vec3(0.4, 0.2, 0.1); alpha=1.0; } 
             } else if (type == 4) { // COIN
                  if (abs(length(vUv)-0.6) < 0.1) { col = vec3(1.0, 0.8, 0.0); alpha=1.0; }
             } else if (type == 5) { // POWERUP

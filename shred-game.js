@@ -63,6 +63,34 @@
                     Math.cos(nx * 12 + 1) * 10
                 );
             }
+
+            // Load snowboarder sprite and chroma-key out green
+            this.riderReady = false;
+            this.riderImg = new Image();
+            this.riderImg.onload = () => {
+                // Process: remove green background
+                const oc = document.createElement('canvas');
+                oc.width = this.riderImg.width;
+                oc.height = this.riderImg.height;
+                const octx = oc.getContext('2d');
+                octx.drawImage(this.riderImg, 0, 0);
+                const imgData = octx.getImageData(0, 0, oc.width, oc.height);
+                const d = imgData.data;
+                for (let i = 0; i < d.length; i += 4) {
+                    const r = d[i], g = d[i + 1], b = d[i + 2];
+                    // Remove bright green (chroma key)
+                    if (g > 150 && r < 150 && b < 150) {
+                        d[i + 3] = 0; // fully transparent
+                    } else if (g > 120 && g > r * 1.2 && g > b * 1.2) {
+                        // Semi-green edge pixels — make semi-transparent
+                        d[i + 3] = Math.floor(d[i + 3] * 0.3);
+                    }
+                }
+                octx.putImageData(imgData, 0, 0);
+                this.riderCanvas = oc;
+                this.riderReady = true;
+            };
+            this.riderImg.src = 'snowboarder.png';
         }
 
         clear() {
@@ -445,226 +473,50 @@
             ctx.fill();
         }
 
-        // --- WEAPON (First-Person Snowboard — Looking Down at Your Feet) ---
+        // --- WEAPON (Snowboarder Sprite Image) ---
         renderWeapon(tilt, speed, frameCount) {
+            if (!this.riderReady) return;
+
             const ctx = this.ctx;
             const w = this.w;
             const h = this.h;
             const cx = w / 2;
             const sway = Math.sin(frameCount * 0.08) * (speed * 5);
-            const tx = tilt * 45 + sway;
+            const tx = tilt * 40 + sway;
+
+            // Sprite sizing — fill bottom ~55% of screen
+            const spriteH = h * 0.58;
+            const aspect = this.riderCanvas.width / this.riderCanvas.height;
+            const spriteW = spriteH * aspect;
+
+            const drawX = cx - spriteW / 2 + tx;
+            const drawY = h - spriteH + 20; // slightly below bottom so head is visible but feet extend off
 
             ctx.save();
 
-            // === LEGS (thick, coming from behind camera) ===
-            const legW = 50;
-            const legGap = 30; // gap between legs
-            const legTop = h - 160; // legs start high
+            // Tilt rotation for carving
+            ctx.translate(cx + tx, h);
+            ctx.rotate(tilt * 0.08);
+            ctx.translate(-(cx + tx), -h);
 
-            // Left leg — snow pants
-            const llx = cx - legGap / 2 - legW / 2 + tx;
-            ctx.fillStyle = '#1c1c3d';
-            ctx.beginPath();
-            ctx.moveTo(llx - legW * 0.7, h + 10);  // wide at bottom (off screen)
-            ctx.lineTo(llx - legW * 0.3, legTop);   // narrow at top
-            ctx.lineTo(llx + legW * 0.3, legTop);
-            ctx.lineTo(llx + legW * 0.7, h + 10);
-            ctx.closePath();
-            ctx.fill();
-            // pants seam
-            ctx.strokeStyle = '#14142e';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(llx, legTop);
-            ctx.lineTo(llx, h + 10);
-            ctx.stroke();
-
-            // Right leg
-            const rlx = cx + legGap / 2 + legW / 2 + tx;
-            ctx.fillStyle = '#1c1c3d';
-            ctx.beginPath();
-            ctx.moveTo(rlx - legW * 0.7, h + 10);
-            ctx.lineTo(rlx - legW * 0.3, legTop);
-            ctx.lineTo(rlx + legW * 0.3, legTop);
-            ctx.lineTo(rlx + legW * 0.7, h + 10);
-            ctx.closePath();
-            ctx.fill();
-            ctx.strokeStyle = '#14142e';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(rlx, legTop);
-            ctx.lineTo(rlx, h + 10);
-            ctx.stroke();
-
-            // Knee highlights (subtle)
-            ctx.fillStyle = 'rgba(60,60,120,0.3)';
-            ctx.beginPath();
-            ctx.ellipse(llx, h - 110, 18, 10, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.ellipse(rlx, h - 110, 18, 10, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // === BOOTS (chunky snowboard boots) ===
-            const bootW = 50;
-            const bootH = 35;
-            const bootY = h - 55;
-
-            // Left boot
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.moveTo(llx - bootW / 2, bootY + bootH);     // bottom left
-            ctx.lineTo(llx - bootW / 2, bootY + 5);         // up left
-            ctx.quadraticCurveTo(llx - bootW / 2, bootY - 5, llx - bootW / 4, bootY - 5); // top curve
-            ctx.lineTo(llx + bootW / 4, bootY - 5);
-            ctx.quadraticCurveTo(llx + bootW / 2, bootY - 5, llx + bootW / 2, bootY + 5);
-            ctx.lineTo(llx + bootW / 2, bootY + bootH);
-            ctx.closePath();
-            ctx.fill();
-            // Boot sole
-            ctx.fillStyle = '#333';
-            ctx.fillRect(llx - bootW / 2, bootY + bootH - 6, bootW, 6);
-            // Boot lacing
-            ctx.strokeStyle = '#e74c3c';
-            ctx.lineWidth = 2;
-            for (let i = 0; i < 3; i++) {
-                const ly = bootY + 3 + i * 9;
-                ctx.beginPath();
-                ctx.moveTo(llx - 10, ly);
-                ctx.lineTo(llx + 10, ly);
-                ctx.stroke();
-            }
-
-            // Right boot
-            ctx.fillStyle = '#1a1a1a';
-            ctx.beginPath();
-            ctx.moveTo(rlx - bootW / 2, bootY + bootH);
-            ctx.lineTo(rlx - bootW / 2, bootY + 5);
-            ctx.quadraticCurveTo(rlx - bootW / 2, bootY - 5, rlx - bootW / 4, bootY - 5);
-            ctx.lineTo(rlx + bootW / 4, bootY - 5);
-            ctx.quadraticCurveTo(rlx + bootW / 2, bootY - 5, rlx + bootW / 2, bootY + 5);
-            ctx.lineTo(rlx + bootW / 2, bootY + bootH);
-            ctx.closePath();
-            ctx.fill();
-            ctx.fillStyle = '#333';
-            ctx.fillRect(rlx - bootW / 2, bootY + bootH - 6, bootW, 6);
-            ctx.strokeStyle = '#e74c3c';
-            ctx.lineWidth = 2;
-            for (let i = 0; i < 3; i++) {
-                const ly = bootY + 3 + i * 9;
-                ctx.beginPath();
-                ctx.moveTo(rlx - 10, ly);
-                ctx.lineTo(rlx + 10, ly);
-                ctx.stroke();
-            }
-
-            // === SNOWBOARD (wide, foreshortened perspective) ===
-            const boardY = h - 16;
-            const boardNear = 170;  // width at bottom (near camera)
-            const boardFar = 130;   // width at top (far from camera)
-            const boardH = 24;
-
-            ctx.save();
-            ctx.translate(cx + tx, boardY);
-            ctx.rotate(tilt * 0.06);
-
-            // Shadow
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
-            ctx.beginPath();
-            ctx.moveTo(-boardNear / 2 + 5, boardH + 4);
-            ctx.lineTo(-boardFar / 2 + 5, -4);
-            ctx.lineTo(boardFar / 2 + 5, -4);
-            ctx.lineTo(boardNear / 2 + 5, boardH + 4);
-            ctx.closePath();
-            ctx.fill();
-
-            // Board body (trapezoid — perspective)
-            const bGrad = ctx.createLinearGradient(0, -boardH / 2, 0, boardH);
-            bGrad.addColorStop(0, '#0d2847');
-            bGrad.addColorStop(0.5, '#1a4a7a');
-            bGrad.addColorStop(1, '#0d2847');
-            ctx.fillStyle = bGrad;
-
-            // Rounded trapezoid shape
-            ctx.beginPath();
-            ctx.moveTo(-boardFar / 2 + 10, 0);
-            ctx.quadraticCurveTo(-boardFar / 2 - 5, 0, -boardNear / 2 - 5, boardH / 2); // left tip
-            ctx.quadraticCurveTo(-boardNear / 2 - 5, boardH, -boardNear / 2 + 10, boardH);
-            ctx.lineTo(boardNear / 2 - 10, boardH);
-            ctx.quadraticCurveTo(boardNear / 2 + 5, boardH, boardNear / 2 + 5, boardH / 2); // right tip
-            ctx.quadraticCurveTo(boardNear / 2 + 5, 0, boardFar / 2 - 10, 0);
-            ctx.closePath();
-            ctx.fill();
-
-            // Metal edge
-            ctx.strokeStyle = '#5aa8d8';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            // Top surface sheen
-            const sheen = ctx.createLinearGradient(0, 0, 0, boardH);
-            sheen.addColorStop(0, 'rgba(120,200,255,0.15)');
-            sheen.addColorStop(0.3, 'rgba(255,255,255,0.05)');
-            sheen.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = sheen;
-            ctx.fill();
-
-            // Center stripe graphic
-            ctx.fillStyle = '#c0392b';
-            ctx.beginPath();
-            ctx.moveTo(-boardFar / 2 + 30, boardH / 2 - 3);
-            ctx.lineTo(boardFar / 2 - 30, boardH / 2 - 3);
-            ctx.lineTo(boardNear / 2 - 30, boardH / 2 + 3);
-            ctx.lineTo(-boardNear / 2 + 30, boardH / 2 + 3);
-            ctx.closePath();
-            ctx.fill();
-
-            // Brand name
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            ctx.font = 'bold 9px "Courier New"';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('SHRED', 0, boardH / 2);
-
-            // Binding plates
-            const bindW = 35, bindH = 20;
-            // Left binding
-            ctx.fillStyle = 'rgba(40,40,40,0.8)';
-            ctx.beginPath();
-            ctx.roundRect(-50 - bindW / 2, boardH / 2 - bindH / 2, bindW, bindH, 3);
-            ctx.fill();
-            ctx.strokeStyle = '#e74c3c';
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(-50 - bindW / 2 + 3, boardH / 2 - bindH / 2 + 3, bindW - 6, 4);
-            ctx.strokeRect(-50 - bindW / 2 + 3, boardH / 2 + 3, bindW - 6, 4);
-
-            // Right binding
-            ctx.fillStyle = 'rgba(40,40,40,0.8)';
-            ctx.beginPath();
-            ctx.roundRect(50 - bindW / 2, boardH / 2 - bindH / 2, bindW, bindH, 3);
-            ctx.fill();
-            ctx.strokeStyle = '#e74c3c';
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(50 - bindW / 2 + 3, boardH / 2 - bindH / 2 + 3, bindW - 6, 4);
-            ctx.strokeRect(50 - bindW / 2 + 3, boardH / 2 + 3, bindW - 6, 4);
+            // Draw the rider
+            ctx.drawImage(this.riderCanvas, drawX, drawY, spriteW, spriteH);
 
             ctx.restore();
 
-            // === SNOW SPRAY when carving ===
+            // Snow spray when carving
             if (Math.abs(tilt) > 0.15) {
                 const dir = tilt > 0 ? -1 : 1;
                 ctx.fillStyle = 'rgba(220,240,255,0.5)';
-                for (let i = 0; i < 12; i++) {
-                    const sx = cx + dir * (130 + Math.random() * 60) + tx;
-                    const sy = h - 10 + Math.random() * 15;
-                    const sz = 1.5 + Math.random() * 4;
+                for (let i = 0; i < 14; i++) {
+                    const sx = cx + dir * (100 + Math.random() * 80) + tx;
+                    const sy = h - 30 + Math.random() * 35;
+                    const sz = 2 + Math.random() * 5;
                     ctx.beginPath();
                     ctx.arc(sx, sy, sz, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
-
-            ctx.restore();
         }
 
         // --- SPEED LINES ---
