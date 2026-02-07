@@ -9,56 +9,56 @@ const SKILL_DETAILS = {
         tip: "Keep your weight centered over the board. Look where you want to go, not at your feet!",
         commonMistakes: ["Leaning back (causes the nose to lift)", "Looking down at the board", "Stiff legs — keep knees bent!"],
         drills: ["Garland turns — practice half-turns across the slope", "Count to 3 between each turn to build rhythm", "Try turns with arms behind your back for balance"],
-        video: "https://www.youtube.com/results?search_query=snowboard+linked+turns+beginner+tutorial"
+        videoId: "TSCbEcjpU0w"
     },
     "p1_s1": {
         name: "Speed control — skidded stops both directions",
         tip: "Press your toes or heels into the snow gradually — don't slam them. Think of it like squeezing a brake.",
         commonMistakes: ["Sitting back to stop (will make you fall)", "Only stopping on one edge", "Straightening legs when scared"],
         drills: ["Red light / green light game — stop on command!", "Practice stopping within a 'box' you draw in the snow", "Alternate heel stops and toe stops down the run"],
-        video: "https://www.youtube.com/results?search_query=snowboard+speed+control+beginner"
+        videoId: "Ih5gPN1DOyw"
     },
     "p1_s2": {
         name: "Falling leaf — heel & toe edge (mastered)",
         tip: "You've already got this one! Use it as your warm-up every session.",
         commonMistakes: ["Rushing — use falling leaf to warm up your edges", "Forgetting to practice toe-side falling leaf"],
         drills: ["Race each other doing falling leaf!", "Try it on steeper terrain to build edge confidence", "Do it switch (opposite foot forward)"],
-        video: "https://www.youtube.com/results?search_query=snowboard+falling+leaf+technique"
+        videoId: "r5ssUoMKyHc"
     },
     "p1_s3": {
         name: "Basic carving on gentle slopes",
         tip: "Carving means your board rides on its edge cutting an arc — no skidding! Tilt the board, don't twist it.",
         commonMistakes: ["Skidding the tail (that's steering, not carving)", "Not enough knee angulation", "Going too slow — you need some speed for carving"],
         drills: ["Try to leave a thin pencil line in the snow", "Carve one direction and look back at your track", "Play 'railroad tracks' — follow each other's carved lines"],
-        video: "https://www.youtube.com/results?search_query=snowboard+basic+carving+tutorial"
+        videoId: "MCVYbqjydVk"
     },
     "p1_s4": {
         name: "Switch stance introduction — straight glide",
         tip: "Switch = riding with your opposite foot forward. Start on flat terrain just sliding straight.",
         commonMistakes: ["Twisting body to look downhill (stay centered)", "Giving up too fast — it feels super weird at first!", "Trying turns before you can glide straight"],
         drills: ["Skate around the flat area switch", "Straight run switch on the bunny hill", "One run regular, one run switch — alternate all day"],
-        video: "https://www.youtube.com/results?search_query=snowboard+switch+riding+beginner"
+        videoId: "gHoFzOVBx9U"
     },
     "p1_s5": {
         name: "Riding small rollers & natural features",
         tip: "Bend your knees as you go over bumps — absorb them like a car's suspension!",
         commonMistakes: ["Stiff legs on rollers (bouncy and out of control)", "Not looking ahead for the next feature", "Going too fast before you're comfortable"],
         drills: ["Find a gentle roller and ride over it 10 times", "Try getting a tiny air off a natural bump", "Ride through chopped up snow on the side of the run"],
-        video: "https://www.youtube.com/results?search_query=snowboard+riding+terrain+features+beginner"
+        videoId: "L_SeJcCZBN0"
     },
     "p1_s6": {
         name: "Comfortable on blue runs",
         tip: "Blues are steeper but the same skills apply. Control your speed with turning, not braking!",
         commonMistakes: ["Surviving the run instead of enjoying it", "Making huge traverses instead of turning", "Going straight and then panic-stopping"],
         drills: ["Pick the easiest blue and do 5 laps", "Count your turns — try to make at least 8 per section", "Challenge: no falling leaf allowed on blue runs!"],
-        video: "https://www.youtube.com/results?search_query=snowboard+blue+run+tips"
+        videoId: "fSJPFoAFoPE"
     },
     "p1_s7": {
         name: "Intro to proper body position & edge angles",
         tip: "Knees bent, back straight, arms relaxed at sides. Your front hand points where you want to go.",
         commonMistakes: ["Bending at the waist (bend knees instead)", "Arms flailing like a windmill", "Counter-rotation (twisting body opposite to the turn)"],
         drills: ["Practice stance in your living room on carpet", "Have someone film you — compare to pro riders", "Hold a ball in front of you while riding — it keeps arms quiet"],
-        video: "https://www.youtube.com/results?search_query=snowboard+proper+stance+body+position"
+        videoId: "4oeZwniGwBg"
     },
     // Phase 2 — Intermediate
     "p2_s0": {
@@ -66,66 +66,66 @@ const SKILL_DETAILS = {
         tip: "Now add power! Drive your knees into each turn and feel the board flex.",
         commonMistakes: ["Upper body rotation instead of lower body angulation", "Not committing to the edge", "Speed fear — carving actually gives you MORE control"],
         drills: ["Javelin turns — hold your front arm like a javelin pointing downhill", "Euro-carve attempts (touching snow with hand)", "Carve a figure-8 on a wide open blue"],
-        video: "https://www.youtube.com/results?search_query=snowboard+dynamic+carving+intermediate"
+        videoId: "LOrPkdqBn6c"
     },
     "p2_s1": {
         name: "Carving on steeper terrain (black runs)",
         tip: "Black runs reward good technique. Short, quick turns = speed control on steeps.",
         commonMistakes: ["Leaning uphill out of fear", "Making turns too wide (cross-hill traverses)", "Looking at the steepness instead of your next turn"],
         drills: ["Pick the shortest black run available", "Make 3 turns then stop, 3 turns then stop", "Sideslip the top, carve the bottom — gradually extend the carving portion"],
-        video: "https://www.youtube.com/results?search_query=snowboard+carving+steep+terrain"
+        videoId: "nMGXu7TW0Bg"
     },
     "p2_s2": {
         name: "Switch riding — linking turns",
         tip: "Everything you learned regular — now mirror it. It's like learning a new language with the same alphabet.",
         commonMistakes: ["Only practicing switch for 1 run then quitting", "Not committing to full turns", "Different technique switch vs regular (should be the same)"],
         drills: ["Entire last run of the day = switch only", "Switch races with your sister!", "Film yourself switch, compare to regular footage"],
-        video: "https://www.youtube.com/results?search_query=snowboard+switch+turns+tutorial"
+        videoId: "gHoFzOVBx9U"
     },
     "p2_s3": {
         name: "Intro to park — straight airs off small jumps",
         tip: "Start with the XS jumps. Pop off the lip, stay centered, land with both feet. No tricks yet — just airtime!",
         commonMistakes: ["Leaning back on takeoff (nose goes up, you land on your butt)", "Arms flailing in the air", "Not enough speed (worse than too much!)"],
         drills: ["Pop off flat ground 20 times first", "Hit the same small jump 10 times in a row", "Focus: quiet upper body, bent knees on landing"],
-        video: "https://www.youtube.com/results?search_query=snowboard+first+jump+park+beginner"
+        videoId: "dGMfTNqbwnU"
     },
     "p2_s4": {
         name: "50-50 on boxes",
         tip: "50-50 = riding straight across. Keep your base flat, knees bent, eyes on the end of the box. Commit!",
         commonMistakes: ["Looking at the box surface (look at the END)", "Leaning heel or toe side (stay flat)", "Stepping off the side instead of riding off the end"],
         drills: ["Practice balancing on a curb or rail on the ground first", "Hit the box 10 times aiming for the center", "Try going slower, then gradually faster"],
-        video: "https://www.youtube.com/results?search_query=snowboard+50-50+box+tutorial+beginner"
+        videoId: "AzNwHj3IWhk"
     },
     "p2_s5": {
         name: "Intro to halfpipe — dropping in",
         tip: "Start from the deck (top edge), point your nose down the transition, and ride down. Just ride wall to wall at first.",
         commonMistakes: ["Leaning back when dropping in", "Going too fast too early", "Not bending knees in the transition (flat bottom)"],
         drills: ["Ride across the flat bottom back and forth first", "Drop in from lower on the wall, work your way up", "5 runs just riding the pipe without trying any airs"],
-        video: "https://www.youtube.com/results?search_query=snowboard+halfpipe+dropping+in+beginner"
+        videoId: "u-JIJbqhbis"
     },
     "p2_s6": {
         name: "Butter tricks (nose/tail press)",
         tip: "Shift your weight over your nose or tail and press the board into the snow — like a butter knife!",
         commonMistakes: ["Bending at the waist instead of shifting hips", "Not enough flex in the knees", "Trying on steep terrain (start on flat!)"],
         drills: ["Nose press for 3 seconds while riding flat", "Tail press for 3 seconds", "Butter challenge: who can hold it longest?"],
-        video: "https://www.youtube.com/results?search_query=snowboard+butter+tricks+nose+tail+press"
+        videoId: "uAvTvCIFJ84"
     },
     "p2_s7": {
         name: "Riding moguls & variable terrain",
         tip: "Absorb bumps with your legs — think of riding a horse. Look 2-3 bumps ahead!",
         commonMistakes: ["Stiff legs getting launched off bumps", "Looking at the bump you're ON instead of ahead", "Going straight instead of turning around bumps"],
         drills: ["Ride 3 bumps slowly, stop. Repeat", "Try to touch the top of each mogul with your hand", "Absorb drill: ride rollers and try to keep your head at the same height"],
-        video: "https://www.youtube.com/results?search_query=snowboard+moguls+variable+terrain"
+        videoId: "kK_NJPq-1ME"
     },
     // Phase 3 — Park Fundamentals
-    "p3_s0": { name: "Frontside & backside 180s", tip: "Wind up with your shoulders, unwind through the spin. Land switch — so practice switch first!", commonMistakes: ["Not committing to the full rotation", "Spinning but not spotting the landing", "Off-axis spin (keep it flat)"], drills: ["Practice 180s on flat ground with your board on", "Do 180s on a trampoline", "Hit the small jump doing frontside 180 only until it's easy"], video: "https://www.youtube.com/results?search_query=snowboard+180+tutorial" },
-    "p3_s1": { name: "Frontside 360 off kickers", tip: "Same as 180 but keep the rotation going! Look over your shoulder to spot the landing.", commonMistakes: ["Opening up too early (under-rotating)", "Over-rotating and going to 450", "Not popping off the lip properly"], drills: ["360s on a trampoline until they're second nature", "Frontside 360 off side hits before the kicker", "Visualize the full rotation before each attempt"], video: "https://www.youtube.com/results?search_query=snowboard+frontside+360+tutorial" },
-    "p3_s2": { name: "Boardslide on rails", tip: "Turn your board 90° and slide sideways across the rail. Keep your weight centered and look at the end.", commonMistakes: ["Leaning too far forward or back on the rail", "Not turning the full 90 degrees", "Looking down at the rail instead of the end"], drills: ["Practice on wide boxes first before rails", "Boardslide everything: boxes, logs, benches (carefully!)", "10 in a row without falling off"], video: "https://www.youtube.com/results?search_query=snowboard+boardslide+rail+tutorial" },
-    "p3_s3": { name: "Frontside & backside grabs", tip: "Bring the board to your hand, don't reach for the board! Bone it out for style.", commonMistakes: ["Bending at the waist to reach the board", "Not holding the grab long enough", "Forgetting to pop off the lip first"], drills: ["Practice grabs on a trampoline first", "Indy grab 10 times, then mute grab 10 times", "Grab competition: who can hold it the longest?"], video: "https://www.youtube.com/results?search_query=snowboard+grabs+indy+mute+melon+tutorial" },
-    "p3_s4": { name: "Halfpipe — riding wall to wall", tip: "Pump the transitions! Bend knees going in, extend going up. Like a skateboard pump track.", commonMistakes: ["Flat-basing in the transition (edge your board!)", "Not pumping — just coasting", "Getting too close to the lip before you're ready"], drills: ["Pump drills: 10 laps of just pumping transitions", "Try to get a little higher each lap", "Count your wall hits — try for 6+ per run"], video: "https://www.youtube.com/results?search_query=snowboard+halfpipe+transitions+pumping" },
-    "p3_s5": { name: "Small kicker confidence (10-20ft)", tip: "Speed check by watching others. Pop straight up off the lip, keep your eyes on the landing.", commonMistakes: ["Absorbing the lip instead of popping", "Dead sailoring (arms and legs everywhere)", "Landing flat instead of on the downslope"], drills: ["Same jump, 10 times in a row — build the muscle memory", "Try adding a grab once the air feels easy", "Distance control: try to land in the same spot each time"], video: "https://www.youtube.com/results?search_query=snowboard+small+kicker+tips+beginner+park" },
-    "p3_s6": { name: "Switch 180s", tip: "You already know 180s regular — now do them starting switch. This is called 'Cab' (or caballerial).", commonMistakes: ["Different technique than regular 180s (should feel mirrored)", "Not looking over the correct shoulder", "Reverting immediately on landing"], drills: ["Switch 180s on flat ground first", "Cab 180 off every side hit you see", "10 in a row off a small jump"], video: "https://www.youtube.com/results?search_query=snowboard+switch+180+cab+tutorial" },
-    "p3_s7": { name: "Snowboard cross — basic gate training", tip: "SBX is all about being fast AND smooth through gates. Racing line = shortest distance + best angle.", commonMistakes: ["Hitting gates instead of going around them", "Losing speed in transitions between gates", "Not looking ahead to the next gate"], drills: ["Set up 4 markers and practice weaving through", "Race each other through gates!", "Practice pumping through rollers in the SBX course"], video: "https://www.youtube.com/results?search_query=snowboard+cross+gate+training+beginner" }
+    "p3_s0": { name: "Frontside & backside 180s", tip: "Wind up with your shoulders, unwind through the spin. Land switch — so practice switch first!", commonMistakes: ["Not committing to the full rotation", "Spinning but not spotting the landing", "Off-axis spin (keep it flat)"], drills: ["Practice 180s on flat ground with your board on", "Do 180s on a trampoline", "Hit the small jump doing frontside 180 only until it's easy"], videoId: "UHhGqNr2y9M" },
+    "p3_s1": { name: "Frontside 360 off kickers", tip: "Same as 180 but keep the rotation going! Look over your shoulder to spot the landing.", commonMistakes: ["Opening up too early (under-rotating)", "Over-rotating and going to 450", "Not popping off the lip properly"], drills: ["360s on a trampoline until they're second nature", "Frontside 360 off side hits before the kicker", "Visualize the full rotation before each attempt"], videoId: "dF0mJhILI1g" },
+    "p3_s2": { name: "Boardslide on rails", tip: "Turn your board 90° and slide sideways across the rail. Keep your weight centered and look at the end.", commonMistakes: ["Leaning too far forward or back on the rail", "Not turning the full 90 degrees", "Looking down at the rail instead of the end"], drills: ["Practice on wide boxes first before rails", "Boardslide everything: boxes, logs, benches (carefully!)", "10 in a row without falling off"], videoId: "mAmjJH1FXWI" },
+    "p3_s3": { name: "Frontside & backside grabs", tip: "Bring the board to your hand, don't reach for the board! Bone it out for style.", commonMistakes: ["Bending at the waist to reach the board", "Not holding the grab long enough", "Forgetting to pop off the lip first"], drills: ["Practice grabs on a trampoline first", "Indy grab 10 times, then mute grab 10 times", "Grab competition: who can hold it the longest?"], videoId: "8P_JFPVBqnk" },
+    "p3_s4": { name: "Halfpipe — riding wall to wall", tip: "Pump the transitions! Bend knees going in, extend going up. Like a skateboard pump track.", commonMistakes: ["Flat-basing in the transition (edge your board!)", "Not pumping — just coasting", "Getting too close to the lip before you're ready"], drills: ["Pump drills: 10 laps of just pumping transitions", "Try to get a little higher each lap", "Count your wall hits — try for 6+ per run"], videoId: "u-JIJbqhbis" },
+    "p3_s5": { name: "Small kicker confidence (10-20ft)", tip: "Speed check by watching others. Pop straight up off the lip, keep your eyes on the landing.", commonMistakes: ["Absorbing the lip instead of popping", "Dead sailoring (arms and legs everywhere)", "Landing flat instead of on the downslope"], drills: ["Same jump, 10 times in a row — build the muscle memory", "Try adding a grab once the air feels easy", "Distance control: try to land in the same spot each time"], videoId: "dGMfTNqbwnU" },
+    "p3_s6": { name: "Switch 180s", tip: "You already know 180s regular — now do them starting switch. This is called 'Cab' (or caballerial).", commonMistakes: ["Different technique than regular 180s (should feel mirrored)", "Not looking over the correct shoulder", "Reverting immediately on landing"], drills: ["Switch 180s on flat ground first", "Cab 180 off every side hit you see", "10 in a row off a small jump"], videoId: "UHhGqNr2y9M" },
+    "p3_s7": { name: "Snowboard cross — basic gate training", tip: "SBX is all about being fast AND smooth through gates. Racing line = shortest distance + best angle.", commonMistakes: ["Hitting gates instead of going around them", "Losing speed in transitions between gates", "Not looking ahead to the next gate"], drills: ["Set up 4 markers and practice weaving through", "Race each other through gates!", "Practice pumping through rollers in the SBX course"], videoId: "o_8_0i-MRVQ" }
 };
 
 // Add generic details for phases 4-8 (more advanced)
@@ -140,7 +140,7 @@ for (let p = 4; p <= 8; p++) {
                 tip: "Focus on consistency and progression. Film yourself and review!",
                 commonMistakes: ["Rushing to the next level before mastering this", "Not warming up properly", "Skipping fundamentals"],
                 drills: ["10 reps of this skill per session", "Film and review your technique", "Visualize before attempting"],
-                video: `https://www.youtube.com/results?search_query=snowboard+${encodeURIComponent(sk.split('—')[0].trim())}+tutorial`
+                videoSearch: `snowboard+${encodeURIComponent(sk.split('—')[0].trim())}+tutorial`
             };
         }
     });
@@ -300,6 +300,19 @@ function showSkillModal(skillKey) {
     const existing = document.querySelector('.skill-modal-overlay');
     if (existing) existing.remove();
 
+    // Build video section
+    let videoHTML = '';
+    if (detail.videoId) {
+        videoHTML = `
+            <div class="modal-video-container">
+                <iframe src="https://www.youtube.com/embed/${detail.videoId}?rel=0&modestbranding=1"
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>`;
+    } else if (detail.videoSearch) {
+        videoHTML = `<a href="https://www.youtube.com/results?search_query=${detail.videoSearch}" target="_blank" class="modal-video-btn">▶️ Search Tutorial Videos</a>`;
+    }
+
     const overlay = document.createElement('div');
     overlay.className = 'skill-modal-overlay';
     overlay.innerHTML = `
@@ -307,6 +320,8 @@ function showSkillModal(skillKey) {
             <button class="modal-close">&times;</button>
             <h3 class="modal-title">${detail.name}</h3>
             
+            ${videoHTML}
+
             <div class="modal-section">
                 <div class="modal-section-header">
                     <span class="modal-icon">💡</span>
@@ -334,10 +349,6 @@ function showSkillModal(skillKey) {
                     ${detail.drills.map(d => `<li>${d}</li>`).join('')}
                 </ul>
             </div>
-
-            <a href="${detail.video}" target="_blank" class="modal-video-btn">
-                ▶️ Search Tutorial Videos
-            </a>
         </div>
     `;
     document.body.appendChild(overlay);

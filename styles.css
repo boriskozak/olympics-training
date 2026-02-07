@@ -1104,6 +1104,26 @@ footer {
     color: var(--ice);
 }
 
+.modal-video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.15);
+}
+
+.modal-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
 .modal-video-btn {
     display: inline-block;
     margin-top: 0.5rem;
