@@ -239,33 +239,33 @@ function getCurrentPhase(rider) {
 // ===== CELEBRATION EFFECTS =====
 function fireConfetti(x, y) {
     const snowflakes = ['❄', '❅', '❆', '✻', '✼', '❄️'];
-    const colors = ['#ffffff', '#e0f2fe', '#bae6fd', '#7dd3fc', '#38bdf8', '#a78bfa', '#c4b5fd'];
+    const colors = ['#ffffff', '#e0f2fe', '#bae6fd', '#7dd3fc', '#38bdf8', '#a78bfa', '#c4b5fd', '#fbbf24'];
     const container = document.createElement('div');
     container.style.cssText = `position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;overflow:hidden;`;
     document.body.appendChild(container);
-    const count = 45;
+    const count = 80;
     for (let i = 0; i < count; i++) {
         const flake = document.createElement('span');
-        const size = 12 + Math.random() * 22;
+        const size = 16 + Math.random() * 36;
         const angle = (Math.random() * 360) * (Math.PI / 180);
-        const burstDist = 60 + Math.random() * 160;
-        const driftX = (Math.random() - 0.5) * 120;
-        const fallDist = 200 + Math.random() * 400;
-        const spinEnd = (Math.random() - 0.5) * 1080;
+        const burstDist = 120 + Math.random() * 500;
+        const driftX = (Math.random() - 0.5) * 400;
+        const fallDist = 300 + Math.random() * 800;
+        const spinEnd = (Math.random() - 0.5) * 1440;
         const color = colors[Math.floor(Math.random() * colors.length)];
         const sym = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-        const duration = 1200 + Math.random() * 1000;
-        const delay = Math.random() * 200;
+        const duration = 1500 + Math.random() * 1500;
+        const delay = Math.random() * 300;
         flake.textContent = sym;
-        flake.style.cssText = `position:absolute;left:${x}px;top:${y}px;font-size:${size}px;color:${color};text-shadow:0 0 6px rgba(56,189,248,0.6);filter:drop-shadow(0 0 3px rgba(255,255,255,0.4));line-height:1;`;
+        flake.style.cssText = `position:absolute;left:${x}px;top:${y}px;font-size:${size}px;color:${color};text-shadow:0 0 10px rgba(56,189,248,0.7),0 0 20px rgba(167,139,250,0.4);filter:drop-shadow(0 0 6px rgba(255,255,255,0.5));line-height:1;`;
         container.appendChild(flake);
         flake.animate([
-            { transform: 'translate(0,0) rotate(0deg) scale(0.3)', opacity: 1 },
-            { transform: `translate(${Math.cos(angle) * burstDist * 0.5 + driftX * 0.3}px,${Math.sin(angle) * burstDist * 0.5}px) rotate(${spinEnd * 0.4}deg) scale(1.1)`, opacity: 1, offset: 0.25 },
-            { transform: `translate(${Math.cos(angle) * burstDist + driftX}px,${Math.sin(angle) * burstDist + fallDist}px) rotate(${spinEnd}deg) scale(0.6)`, opacity: 0 }
-        ], { duration, delay, easing: 'cubic-bezier(0.25,0.46,0.45,0.94)', fill: 'forwards' });
+            { transform: 'translate(0,0) rotate(0deg) scale(0.2)', opacity: 1 },
+            { transform: `translate(${Math.cos(angle) * burstDist * 0.4 + driftX * 0.3}px,${Math.sin(angle) * burstDist * 0.4 - 60}px) rotate(${spinEnd * 0.3}deg) scale(1.2)`, opacity: 1, offset: 0.2 },
+            { transform: `translate(${Math.cos(angle) * burstDist + driftX}px,${Math.sin(angle) * burstDist * 0.3 + fallDist}px) rotate(${spinEnd}deg) scale(0.5)`, opacity: 0 }
+        ], { duration, delay, easing: 'cubic-bezier(0.15,0.6,0.35,1)', fill: 'forwards' });
     }
-    setTimeout(() => container.remove(), 2800);
+    setTimeout(() => container.remove(), 3500);
 }
 
 function fireBigCelebration() {
