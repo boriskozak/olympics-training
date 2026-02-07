@@ -445,193 +445,221 @@
             ctx.fill();
         }
 
-        // --- WEAPON (First-Person Snowboard View) ---
+        // --- WEAPON (First-Person Snowboard — Looking Down at Your Feet) ---
         renderWeapon(tilt, speed, frameCount) {
             const ctx = this.ctx;
             const w = this.w;
             const h = this.h;
             const cx = w / 2;
-            const sway = Math.sin(frameCount * 0.08) * (speed * 6);
-            const tiltX = tilt * 50 + sway;
+            const sway = Math.sin(frameCount * 0.08) * (speed * 5);
+            const tx = tilt * 45 + sway;
 
             ctx.save();
 
-            // ---- LEGS (snow pants) ----
-            // Left leg
-            ctx.fillStyle = '#1a1a3a'; // Dark snow pants
+            // === LEGS (thick, coming from behind camera) ===
+            const legW = 50;
+            const legGap = 30; // gap between legs
+            const legTop = h - 160; // legs start high
+
+            // Left leg — snow pants
+            const llx = cx - legGap / 2 - legW / 2 + tx;
+            ctx.fillStyle = '#1c1c3d';
             ctx.beginPath();
-            ctx.moveTo(cx - 65 + tiltX, h + 20);     // Off-screen bottom
-            ctx.lineTo(cx - 45 + tiltX, h - 80);     // Knee area
-            ctx.lineTo(cx - 25 + tiltX, h - 80);
-            ctx.lineTo(cx - 30 + tiltX, h + 20);
+            ctx.moveTo(llx - legW * 0.7, h + 10);  // wide at bottom (off screen)
+            ctx.lineTo(llx - legW * 0.3, legTop);   // narrow at top
+            ctx.lineTo(llx + legW * 0.3, legTop);
+            ctx.lineTo(llx + legW * 0.7, h + 10);
             ctx.closePath();
             ctx.fill();
+            // pants seam
+            ctx.strokeStyle = '#14142e';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(llx, legTop);
+            ctx.lineTo(llx, h + 10);
+            ctx.stroke();
 
             // Right leg
+            const rlx = cx + legGap / 2 + legW / 2 + tx;
+            ctx.fillStyle = '#1c1c3d';
             ctx.beginPath();
-            ctx.moveTo(cx + 30 + tiltX, h + 20);
-            ctx.lineTo(cx + 25 + tiltX, h - 80);
-            ctx.lineTo(cx + 45 + tiltX, h - 80);
-            ctx.lineTo(cx + 65 + tiltX, h + 20);
+            ctx.moveTo(rlx - legW * 0.7, h + 10);
+            ctx.lineTo(rlx - legW * 0.3, legTop);
+            ctx.lineTo(rlx + legW * 0.3, legTop);
+            ctx.lineTo(rlx + legW * 0.7, h + 10);
             ctx.closePath();
             ctx.fill();
-
-            // Knee pad highlights
-            ctx.fillStyle = '#252550';
+            ctx.strokeStyle = '#14142e';
+            ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.ellipse(cx - 38 + tiltX, h - 65, 12, 8, 0, 0, Math.PI * 2);
+            ctx.moveTo(rlx, legTop);
+            ctx.lineTo(rlx, h + 10);
+            ctx.stroke();
+
+            // Knee highlights (subtle)
+            ctx.fillStyle = 'rgba(60,60,120,0.3)';
+            ctx.beginPath();
+            ctx.ellipse(llx, h - 110, 18, 10, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.beginPath();
-            ctx.ellipse(cx + 38 + tiltX, h - 65, 12, 8, 0, 0, Math.PI * 2);
+            ctx.ellipse(rlx, h - 110, 18, 10, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // ---- BOOTS ----
+            // === BOOTS (chunky snowboard boots) ===
+            const bootW = 50;
+            const bootH = 35;
+            const bootY = h - 55;
+
             // Left boot
-            ctx.fillStyle = '#222';
+            ctx.fillStyle = '#1a1a1a';
             ctx.beginPath();
-            ctx.roundRect(cx - 55 + tiltX, h - 42, 35, 22, 4);
+            ctx.moveTo(llx - bootW / 2, bootY + bootH);     // bottom left
+            ctx.lineTo(llx - bootW / 2, bootY + 5);         // up left
+            ctx.quadraticCurveTo(llx - bootW / 2, bootY - 5, llx - bootW / 4, bootY - 5); // top curve
+            ctx.lineTo(llx + bootW / 4, bootY - 5);
+            ctx.quadraticCurveTo(llx + bootW / 2, bootY - 5, llx + bootW / 2, bootY + 5);
+            ctx.lineTo(llx + bootW / 2, bootY + bootH);
+            ctx.closePath();
             ctx.fill();
-            // Boot detail
-            ctx.fillStyle = '#e74c3c';
-            ctx.fillRect(cx - 52 + tiltX, h - 40, 8, 3);
+            // Boot sole
+            ctx.fillStyle = '#333';
+            ctx.fillRect(llx - bootW / 2, bootY + bootH - 6, bootW, 6);
+            // Boot lacing
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 3; i++) {
+                const ly = bootY + 3 + i * 9;
+                ctx.beginPath();
+                ctx.moveTo(llx - 10, ly);
+                ctx.lineTo(llx + 10, ly);
+                ctx.stroke();
+            }
 
             // Right boot
-            ctx.fillStyle = '#222';
+            ctx.fillStyle = '#1a1a1a';
             ctx.beginPath();
-            ctx.roundRect(cx + 20 + tiltX, h - 42, 35, 22, 4);
+            ctx.moveTo(rlx - bootW / 2, bootY + bootH);
+            ctx.lineTo(rlx - bootW / 2, bootY + 5);
+            ctx.quadraticCurveTo(rlx - bootW / 2, bootY - 5, rlx - bootW / 4, bootY - 5);
+            ctx.lineTo(rlx + bootW / 4, bootY - 5);
+            ctx.quadraticCurveTo(rlx + bootW / 2, bootY - 5, rlx + bootW / 2, bootY + 5);
+            ctx.lineTo(rlx + bootW / 2, bootY + bootH);
+            ctx.closePath();
             ctx.fill();
-            ctx.fillStyle = '#e74c3c';
-            ctx.fillRect(cx + 23 + tiltX, h - 40, 8, 3);
+            ctx.fillStyle = '#333';
+            ctx.fillRect(rlx - bootW / 2, bootY + bootH - 6, bootW, 6);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            for (let i = 0; i < 3; i++) {
+                const ly = bootY + 3 + i * 9;
+                ctx.beginPath();
+                ctx.moveTo(rlx - 10, ly);
+                ctx.lineTo(rlx + 10, ly);
+                ctx.stroke();
+            }
 
-            // ---- SNOWBOARD ----
+            // === SNOWBOARD (wide, foreshortened perspective) ===
+            const boardY = h - 16;
+            const boardNear = 170;  // width at bottom (near camera)
+            const boardFar = 130;   // width at top (far from camera)
+            const boardH = 24;
+
             ctx.save();
-            ctx.translate(cx + tiltX, h - 18);
-            ctx.rotate(tilt * 0.08);
+            ctx.translate(cx + tx, boardY);
+            ctx.rotate(tilt * 0.06);
 
-            // Board shadow
-            ctx.fillStyle = 'rgba(0,0,0,0.25)';
+            // Shadow
+            ctx.fillStyle = 'rgba(0,0,0,0.2)';
             ctx.beginPath();
-            ctx.moveTo(-140, 18);
-            ctx.quadraticCurveTo(-155, 10, -140, 4);
-            ctx.lineTo(140, 4);
-            ctx.quadraticCurveTo(155, 10, 140, 18);
+            ctx.moveTo(-boardNear / 2 + 5, boardH + 4);
+            ctx.lineTo(-boardFar / 2 + 5, -4);
+            ctx.lineTo(boardFar / 2 + 5, -4);
+            ctx.lineTo(boardNear / 2 + 5, boardH + 4);
             ctx.closePath();
             ctx.fill();
 
-            // Board base - tapered snowboard shape
-            const boardGrad = ctx.createLinearGradient(-150, 0, 150, 0);
-            boardGrad.addColorStop(0, '#0a0a20');
-            boardGrad.addColorStop(0.15, '#16213e');
-            boardGrad.addColorStop(0.5, '#1a3a5c');
-            boardGrad.addColorStop(0.85, '#16213e');
-            boardGrad.addColorStop(1, '#0a0a20');
-            ctx.fillStyle = boardGrad;
+            // Board body (trapezoid — perspective)
+            const bGrad = ctx.createLinearGradient(0, -boardH / 2, 0, boardH);
+            bGrad.addColorStop(0, '#0d2847');
+            bGrad.addColorStop(0.5, '#1a4a7a');
+            bGrad.addColorStop(1, '#0d2847');
+            ctx.fillStyle = bGrad;
 
-            // Snowboard shape (tapered at tips)
+            // Rounded trapezoid shape
             ctx.beginPath();
-            ctx.moveTo(-130, 0);
-            ctx.quadraticCurveTo(-150, 0, -148, -8);  // Left tip curve
-            ctx.lineTo(-130, -10);
-            ctx.lineTo(130, -10);
-            ctx.quadraticCurveTo(150, -8, 148, 0);    // Right tip curve
-            ctx.lineTo(130, 10);
-            ctx.lineTo(-130, 10);
-            ctx.quadraticCurveTo(-150, 8, -148, 0);
+            ctx.moveTo(-boardFar / 2 + 10, 0);
+            ctx.quadraticCurveTo(-boardFar / 2 - 5, 0, -boardNear / 2 - 5, boardH / 2); // left tip
+            ctx.quadraticCurveTo(-boardNear / 2 - 5, boardH, -boardNear / 2 + 10, boardH);
+            ctx.lineTo(boardNear / 2 - 10, boardH);
+            ctx.quadraticCurveTo(boardNear / 2 + 5, boardH, boardNear / 2 + 5, boardH / 2); // right tip
+            ctx.quadraticCurveTo(boardNear / 2 + 5, 0, boardFar / 2 - 10, 0);
             ctx.closePath();
             ctx.fill();
 
-            // Top surface highlight
-            const topGrad = ctx.createLinearGradient(0, -10, 0, 5);
-            topGrad.addColorStop(0, 'rgba(100,180,255,0.2)');
-            topGrad.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = topGrad;
-            ctx.fill();
-
-            // Board edge (metal edge)
-            ctx.strokeStyle = '#6ab0e0';
+            // Metal edge
+            ctx.strokeStyle = '#5aa8d8';
             ctx.lineWidth = 1.5;
             ctx.stroke();
 
-            // Design graphics on board
-            ctx.fillStyle = '#e74c3c';
+            // Top surface sheen
+            const sheen = ctx.createLinearGradient(0, 0, 0, boardH);
+            sheen.addColorStop(0, 'rgba(120,200,255,0.15)');
+            sheen.addColorStop(0.3, 'rgba(255,255,255,0.05)');
+            sheen.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = sheen;
+            ctx.fill();
+
+            // Center stripe graphic
+            ctx.fillStyle = '#c0392b';
             ctx.beginPath();
-            ctx.moveTo(-80, -4);
-            ctx.lineTo(-60, -7);
-            ctx.lineTo(60, -7);
-            ctx.lineTo(80, -4);
-            ctx.lineTo(60, -1);
-            ctx.lineTo(-60, -1);
+            ctx.moveTo(-boardFar / 2 + 30, boardH / 2 - 3);
+            ctx.lineTo(boardFar / 2 - 30, boardH / 2 - 3);
+            ctx.lineTo(boardNear / 2 - 30, boardH / 2 + 3);
+            ctx.lineTo(-boardNear / 2 + 30, boardH / 2 + 3);
             ctx.closePath();
             ctx.fill();
 
-            // Brand text
-            ctx.fillStyle = 'rgba(255,255,255,0.6)';
-            ctx.font = 'bold 8px "Courier New"';
+            // Brand name
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.font = 'bold 9px "Courier New"';
             ctx.textAlign = 'center';
-            ctx.fillText('SHRED', 0, -2);
+            ctx.textBaseline = 'middle';
+            ctx.fillText('SHRED', 0, boardH / 2);
 
-            // Bindings
+            // Binding plates
+            const bindW = 35, bindH = 20;
             // Left binding
-            ctx.fillStyle = '#333';
+            ctx.fillStyle = 'rgba(40,40,40,0.8)';
             ctx.beginPath();
-            ctx.roundRect(-50, -14, 28, 28, 3);
+            ctx.roundRect(-50 - bindW / 2, boardH / 2 - bindH / 2, bindW, bindH, 3);
             ctx.fill();
-            ctx.strokeStyle = '#555';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            // Binding straps
-            ctx.fillStyle = '#e74c3c';
-            ctx.fillRect(-48, -10, 24, 3);
-            ctx.fillRect(-48, 4, 24, 3);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(-50 - bindW / 2 + 3, boardH / 2 - bindH / 2 + 3, bindW - 6, 4);
+            ctx.strokeRect(-50 - bindW / 2 + 3, boardH / 2 + 3, bindW - 6, 4);
 
             // Right binding
-            ctx.fillStyle = '#333';
+            ctx.fillStyle = 'rgba(40,40,40,0.8)';
             ctx.beginPath();
-            ctx.roundRect(22, -14, 28, 28, 3);
+            ctx.roundRect(50 - bindW / 2, boardH / 2 - bindH / 2, bindW, bindH, 3);
             ctx.fill();
-            ctx.strokeStyle = '#555';
-            ctx.stroke();
-            ctx.fillStyle = '#e74c3c';
-            ctx.fillRect(24, -10, 24, 3);
-            ctx.fillRect(24, 4, 24, 3);
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 1.5;
+            ctx.strokeRect(50 - bindW / 2 + 3, boardH / 2 - bindH / 2 + 3, bindW - 6, 4);
+            ctx.strokeRect(50 - bindW / 2 + 3, boardH / 2 + 3, bindW - 6, 4);
 
             ctx.restore();
 
-            // ---- GLOVED HANDS (optional grab pose when turning) ----
-            if (Math.abs(tilt) > 0.3) {
-                const grabSide = tilt > 0 ? 1 : -1;
-                ctx.fillStyle = '#1a1a2e';
-                // Arm
-                ctx.beginPath();
-                ctx.moveTo(cx + grabSide * 120 + tiltX, h - 120);
-                ctx.quadraticCurveTo(
-                    cx + grabSide * 100 + tiltX, h - 60,
-                    cx + grabSide * 80 + tiltX, h - 25
-                );
-                ctx.lineTo(cx + grabSide * 70 + tiltX, h - 25);
-                ctx.quadraticCurveTo(
-                    cx + grabSide * 90 + tiltX, h - 60,
-                    cx + grabSide * 110 + tiltX, h - 120
-                );
-                ctx.closePath();
-                ctx.fill();
-                // Glove
-                ctx.fillStyle = '#333';
-                ctx.beginPath();
-                ctx.arc(cx + grabSide * 75 + tiltX, h - 22, 10, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            // Snow spray from board edges when turning
-            if (Math.abs(tilt) > 0.2) {
-                const sprayDir = tilt > 0 ? -1 : 1;
-                ctx.fillStyle = 'rgba(220,235,255,0.4)';
-                for (let i = 0; i < 8; i++) {
-                    const sx = cx + sprayDir * (100 + Math.random() * 40) + tiltX;
-                    const sy = h - 15 + Math.random() * 20;
-                    const size = 2 + Math.random() * 4;
+            // === SNOW SPRAY when carving ===
+            if (Math.abs(tilt) > 0.15) {
+                const dir = tilt > 0 ? -1 : 1;
+                ctx.fillStyle = 'rgba(220,240,255,0.5)';
+                for (let i = 0; i < 12; i++) {
+                    const sx = cx + dir * (130 + Math.random() * 60) + tx;
+                    const sy = h - 10 + Math.random() * 15;
+                    const sz = 1.5 + Math.random() * 4;
                     ctx.beginPath();
-                    ctx.arc(sx, sy, size, 0, Math.PI * 2);
+                    ctx.arc(sx, sy, sz, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
