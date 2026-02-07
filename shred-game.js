@@ -445,63 +445,198 @@
             ctx.fill();
         }
 
-        // --- WEAPON (Snowboard at bottom) ---
+        // --- WEAPON (First-Person Snowboard View) ---
         renderWeapon(tilt, speed, frameCount) {
             const ctx = this.ctx;
             const w = this.w;
             const h = this.h;
             const cx = w / 2;
-            const boardY = h - 40;
-            const sway = Math.sin(frameCount * 0.08) * (speed * 8);
+            const sway = Math.sin(frameCount * 0.08) * (speed * 6);
+            const tiltX = tilt * 50 + sway;
 
             ctx.save();
-            ctx.translate(cx + tilt * 60 + sway, boardY);
-            ctx.rotate(tilt * 0.15);
+
+            // ---- LEGS (snow pants) ----
+            // Left leg
+            ctx.fillStyle = '#1a1a3a'; // Dark snow pants
+            ctx.beginPath();
+            ctx.moveTo(cx - 65 + tiltX, h + 20);     // Off-screen bottom
+            ctx.lineTo(cx - 45 + tiltX, h - 80);     // Knee area
+            ctx.lineTo(cx - 25 + tiltX, h - 80);
+            ctx.lineTo(cx - 30 + tiltX, h + 20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Right leg
+            ctx.beginPath();
+            ctx.moveTo(cx + 30 + tiltX, h + 20);
+            ctx.lineTo(cx + 25 + tiltX, h - 80);
+            ctx.lineTo(cx + 45 + tiltX, h - 80);
+            ctx.lineTo(cx + 65 + tiltX, h + 20);
+            ctx.closePath();
+            ctx.fill();
+
+            // Knee pad highlights
+            ctx.fillStyle = '#252550';
+            ctx.beginPath();
+            ctx.ellipse(cx - 38 + tiltX, h - 65, 12, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(cx + 38 + tiltX, h - 65, 12, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ---- BOOTS ----
+            // Left boot
+            ctx.fillStyle = '#222';
+            ctx.beginPath();
+            ctx.roundRect(cx - 55 + tiltX, h - 42, 35, 22, 4);
+            ctx.fill();
+            // Boot detail
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(cx - 52 + tiltX, h - 40, 8, 3);
+
+            // Right boot
+            ctx.fillStyle = '#222';
+            ctx.beginPath();
+            ctx.roundRect(cx + 20 + tiltX, h - 42, 35, 22, 4);
+            ctx.fill();
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(cx + 23 + tiltX, h - 40, 8, 3);
+
+            // ---- SNOWBOARD ----
+            ctx.save();
+            ctx.translate(cx + tiltX, h - 18);
+            ctx.rotate(tilt * 0.08);
 
             // Board shadow
-            ctx.fillStyle = 'rgba(0,0,0,0.2)';
+            ctx.fillStyle = 'rgba(0,0,0,0.25)';
             ctx.beginPath();
-            ctx.ellipse(2, 8, 120, 12, 0, 0, Math.PI * 2);
+            ctx.moveTo(-140, 18);
+            ctx.quadraticCurveTo(-155, 10, -140, 4);
+            ctx.lineTo(140, 4);
+            ctx.quadraticCurveTo(155, 10, 140, 18);
+            ctx.closePath();
             ctx.fill();
 
-            // Snowboard body
-            const boardGrad = ctx.createLinearGradient(-110, 0, 110, 0);
-            boardGrad.addColorStop(0, '#1a1a2e');
-            boardGrad.addColorStop(0.3, '#16213e');
-            boardGrad.addColorStop(0.5, '#0f3460');
-            boardGrad.addColorStop(0.7, '#16213e');
-            boardGrad.addColorStop(1, '#1a1a2e');
+            // Board base - tapered snowboard shape
+            const boardGrad = ctx.createLinearGradient(-150, 0, 150, 0);
+            boardGrad.addColorStop(0, '#0a0a20');
+            boardGrad.addColorStop(0.15, '#16213e');
+            boardGrad.addColorStop(0.5, '#1a3a5c');
+            boardGrad.addColorStop(0.85, '#16213e');
+            boardGrad.addColorStop(1, '#0a0a20');
             ctx.fillStyle = boardGrad;
+
+            // Snowboard shape (tapered at tips)
             ctx.beginPath();
-            ctx.ellipse(0, 0, 110, 14, 0, 0, Math.PI * 2);
+            ctx.moveTo(-130, 0);
+            ctx.quadraticCurveTo(-150, 0, -148, -8);  // Left tip curve
+            ctx.lineTo(-130, -10);
+            ctx.lineTo(130, -10);
+            ctx.quadraticCurveTo(150, -8, 148, 0);    // Right tip curve
+            ctx.lineTo(130, 10);
+            ctx.lineTo(-130, 10);
+            ctx.quadraticCurveTo(-150, 8, -148, 0);
+            ctx.closePath();
             ctx.fill();
 
-            // Board edge highlight
-            ctx.strokeStyle = '#4aa0d0';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 110, 14, 0, 0, Math.PI * 2);
+            // Top surface highlight
+            const topGrad = ctx.createLinearGradient(0, -10, 0, 5);
+            topGrad.addColorStop(0, 'rgba(100,180,255,0.2)');
+            topGrad.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = topGrad;
+            ctx.fill();
+
+            // Board edge (metal edge)
+            ctx.strokeStyle = '#6ab0e0';
+            ctx.lineWidth = 1.5;
             ctx.stroke();
 
-            // Bindings
-            ctx.fillStyle = '#333';
-            ctx.fillRect(-30, -8, 16, 16);
-            ctx.fillRect(14, -8, 16, 16);
-
-            // Design stripe
+            // Design graphics on board
             ctx.fillStyle = '#e74c3c';
-            ctx.fillRect(-80, -3, 160, 6);
+            ctx.beginPath();
+            ctx.moveTo(-80, -4);
+            ctx.lineTo(-60, -7);
+            ctx.lineTo(60, -7);
+            ctx.lineTo(80, -4);
+            ctx.lineTo(60, -1);
+            ctx.lineTo(-60, -1);
+            ctx.closePath();
+            ctx.fill();
+
+            // Brand text
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.font = 'bold 8px "Courier New"';
+            ctx.textAlign = 'center';
+            ctx.fillText('SHRED', 0, -2);
+
+            // Bindings
+            // Left binding
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.roundRect(-50, -14, 28, 28, 3);
+            ctx.fill();
+            ctx.strokeStyle = '#555';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            // Binding straps
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(-48, -10, 24, 3);
+            ctx.fillRect(-48, 4, 24, 3);
+
+            // Right binding
+            ctx.fillStyle = '#333';
+            ctx.beginPath();
+            ctx.roundRect(22, -14, 28, 28, 3);
+            ctx.fill();
+            ctx.strokeStyle = '#555';
+            ctx.stroke();
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(24, -10, 24, 3);
+            ctx.fillRect(24, 4, 24, 3);
 
             ctx.restore();
 
-            // Hands/gloves on the edges
-            ctx.fillStyle = '#2c3e50';
-            ctx.beginPath();
-            ctx.arc(cx - 90 + tilt * 40, boardY - 20, 12, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.arc(cx + 90 + tilt * 40, boardY - 20, 12, 0, Math.PI * 2);
-            ctx.fill();
+            // ---- GLOVED HANDS (optional grab pose when turning) ----
+            if (Math.abs(tilt) > 0.3) {
+                const grabSide = tilt > 0 ? 1 : -1;
+                ctx.fillStyle = '#1a1a2e';
+                // Arm
+                ctx.beginPath();
+                ctx.moveTo(cx + grabSide * 120 + tiltX, h - 120);
+                ctx.quadraticCurveTo(
+                    cx + grabSide * 100 + tiltX, h - 60,
+                    cx + grabSide * 80 + tiltX, h - 25
+                );
+                ctx.lineTo(cx + grabSide * 70 + tiltX, h - 25);
+                ctx.quadraticCurveTo(
+                    cx + grabSide * 90 + tiltX, h - 60,
+                    cx + grabSide * 110 + tiltX, h - 120
+                );
+                ctx.closePath();
+                ctx.fill();
+                // Glove
+                ctx.fillStyle = '#333';
+                ctx.beginPath();
+                ctx.arc(cx + grabSide * 75 + tiltX, h - 22, 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Snow spray from board edges when turning
+            if (Math.abs(tilt) > 0.2) {
+                const sprayDir = tilt > 0 ? -1 : 1;
+                ctx.fillStyle = 'rgba(220,235,255,0.4)';
+                for (let i = 0; i < 8; i++) {
+                    const sx = cx + sprayDir * (100 + Math.random() * 40) + tiltX;
+                    const sy = h - 15 + Math.random() * 20;
+                    const size = 2 + Math.random() * 4;
+                    ctx.beginPath();
+                    ctx.arc(sx, sy, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            ctx.restore();
         }
 
         // --- SPEED LINES ---
