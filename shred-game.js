@@ -64,34 +64,46 @@
                 );
             }
 
-            // Load snowboarder sprite and chroma-key out green
+            // Load 3 rider stance sprites and chroma-key out green
+            this.riderSprites = { neutral: null, left: null, right: null };
             this.riderReady = false;
-            this.riderImg = new Image();
-            this.riderImg.onload = () => {
-                // Process: remove green background
+            this._loadedCount = 0;
+
+            const chromaKey = (img) => {
                 const oc = document.createElement('canvas');
-                oc.width = this.riderImg.width;
-                oc.height = this.riderImg.height;
+                oc.width = img.width;
+                oc.height = img.height;
                 const octx = oc.getContext('2d');
-                octx.drawImage(this.riderImg, 0, 0);
+                octx.drawImage(img, 0, 0);
                 const imgData = octx.getImageData(0, 0, oc.width, oc.height);
                 const d = imgData.data;
                 for (let i = 0; i < d.length; i += 4) {
                     const r = d[i], g = d[i + 1], b = d[i + 2];
-                    // Remove bright green (chroma key) — aggressive
                     if (g > 100 && g > r * 1.1 && g > b * 1.1) {
                         d[i + 3] = 0;
                     } else if (g > 80 && g > r && g > b) {
-                        // Edge fringe — fade out
                         const greenness = (g - Math.max(r, b)) / g;
                         d[i + 3] = Math.floor(d[i + 3] * Math.max(0, 1 - greenness * 3));
                     }
                 }
                 octx.putImageData(imgData, 0, 0);
-                this.riderCanvas = oc;
-                this.riderReady = true;
+                return oc;
             };
-            this.riderImg.src = 'snowboarder.png';
+
+            const stanceFiles = {
+                neutral: 'rider_neutral.png',
+                left: 'rider_left.png',
+                right: 'rider_right.png'
+            };
+            for (const [key, file] of Object.entries(stanceFiles)) {
+                const img = new Image();
+                img.onload = () => {
+                    this.riderSprites[key] = chromaKey(img);
+                    this._loadedCount++;
+                    if (this._loadedCount === 3) this.riderReady = true;
+                };
+                img.src = file;
+            }
         }
 
         clear() {
@@ -474,7 +486,7 @@
             ctx.fill();
         }
 
-        // --- WEAPON (Snowboarder Sprite Image) ---
+        // --- WEAPON (Snowboarder Sprite — 3 Stances) ---
         renderWeapon(tilt, speed, frameCount) {
             if (!this.riderReady) return;
 
@@ -485,34 +497,45 @@
             const sway = Math.sin(frameCount * 0.08) * (speed * 5);
             const tx = tilt * 40 + sway;
 
+            // Pick sprite based on tilt
+            let sprite;
+            if (tilt < -0.15) {
+                sprite = this.riderSprites.left;
+            } else if (tilt > 0.15) {
+                sprite = this.riderSprites.right;
+            } else {
+                sprite = this.riderSprites.neutral;
+            }
+            if (!sprite) return;
+
             // Sprite sizing — fill bottom ~65% of screen
             const spriteH = h * 0.68;
-            const aspect = this.riderCanvas.width / this.riderCanvas.height;
+            const aspect = sprite.width / sprite.height;
             const spriteW = spriteH * aspect;
 
             const drawX = cx - spriteW / 2 + tx;
-            const drawY = h - spriteH + 40; // push down so board is near bottom edge
+            const drawY = h - spriteH + 40;
 
             ctx.save();
 
-            // Tilt rotation for carving
+            // Slight tilt rotation for extra feel
             ctx.translate(cx + tx, h);
-            ctx.rotate(tilt * 0.08);
+            ctx.rotate(tilt * 0.05);
             ctx.translate(-(cx + tx), -h);
 
             // Draw the rider
-            ctx.drawImage(this.riderCanvas, drawX, drawY, spriteW, spriteH);
+            ctx.drawImage(sprite, drawX, drawY, spriteW, spriteH);
 
             ctx.restore();
 
             // Snow spray when carving
             if (Math.abs(tilt) > 0.15) {
                 const dir = tilt > 0 ? -1 : 1;
-                ctx.fillStyle = 'rgba(220,240,255,0.5)';
-                for (let i = 0; i < 14; i++) {
-                    const sx = cx + dir * (100 + Math.random() * 80) + tx;
-                    const sy = h - 30 + Math.random() * 35;
-                    const sz = 2 + Math.random() * 5;
+                ctx.fillStyle = 'rgba(220,240,255,0.6)';
+                for (let i = 0; i < 16; i++) {
+                    const sx = cx + dir * (90 + Math.random() * 100) + tx;
+                    const sy = h - 40 + Math.random() * 45;
+                    const sz = 2 + Math.random() * 6;
                     ctx.beginPath();
                     ctx.arc(sx, sy, sz, 0, Math.PI * 2);
                     ctx.fill();
