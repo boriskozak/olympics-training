@@ -178,10 +178,18 @@ document.querySelectorAll('.discipline-chips').forEach(container => {
 let activeTimelineRider = 'cleo';
 function buildTimeline() {
     const container = document.getElementById('timeline-container');
+    // Remember which phases are open before rebuild
+    const openPhases = new Set();
+    container.querySelectorAll('.phase-card.open').forEach(c => {
+        const num = c.dataset.phase;
+        if (num) openPhases.add(num);
+    });
     container.innerHTML = '';
     PHASES.forEach(phase => {
         const card = document.createElement('div');
         card.className = 'phase-card';
+        card.dataset.phase = phase.id;
+        if (openPhases.has(String(phase.id))) card.classList.add('open');
         const completedCount = phase.skills.filter((_, i) => {
             const key = `p${phase.id}_s${i}`;
             return state[activeTimelineRider].skills[key];
