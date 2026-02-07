@@ -26,6 +26,7 @@
             <a href="#daily-challenge-section">Challenges</a>
             <a href="#progression">Training</a>
             <a href="#achievements">Badges</a>
+            <a href="#video-coach">Coach</a>
             <a href="#session-log">Log</a>
         </div>
     </nav>
@@ -202,6 +203,25 @@
         <div id="log-entries" class="log-entries"></div>
     </section>
 
+    <!-- VIDEO COACH -->
+    <section id="video-coach">
+        <h2 class="section-title">🎥 Video Coach</h2>
+        <p class="section-sub">Upload a video of your trick and get instant coaching feedback!</p>
+        <div id="coach-upload-area">
+            <div id="video-dropzone" class="video-dropzone">
+                <div class="dropzone-content">
+                    <span class="dropzone-icon">📹</span>
+                    <h3>Drop your video here</h3>
+                    <p>or click to browse</p>
+                    <span class="dropzone-formats">MP4, MOV, WebM</span>
+                </div>
+                <input type="file" id="video-file-input" accept="video/*" hidden>
+            </div>
+        </div>
+        <div id="coach-preview" style="display:none;"></div>
+        <div id="coach-results"></div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
         <p>PEAKS → PODIUM &copy; 2026 — See you in Salt Lake City 2034 🥇</p>
@@ -214,6 +234,7 @@
 
     <script src="app.js"></script>
     <script src="interactive.js"></script>
+    <script src="video-coach.js"></script>
 </body>
 
 </html>
