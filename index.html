@@ -26,6 +26,7 @@
             <a href="#daily-challenge-section">Challenges</a>
             <a href="#progression">Training</a>
             <a href="#achievements">Badges</a>
+            <a href="#shred-game">Game</a>
             <a href="#video-coach">Coach</a>
             <a href="#session-log">Log</a>
         </div>
@@ -203,6 +204,46 @@
         <div id="log-entries" class="log-entries"></div>
     </section>
 
+    <!-- MOUNTAIN SHRED GAME -->
+    <section id="shred-game">
+        <h2 class="section-title">🎮 Mountain Shred</h2>
+        <p class="section-sub">Race down the mountain dodging cute critters! Play solo or head-to-head!</p>
+        <div id="game-menu" class="game-menu">
+            <div class="game-menu-cards">
+                <button id="btn-single" class="game-mode-card">
+                    <span class="mode-icon">🏂</span>
+                    <h3>Solo Shred</h3>
+                    <p>WASD or Arrow Keys</p>
+                </button>
+                <button id="btn-versus" class="game-mode-card">
+                    <span class="mode-icon">🏂🏂</span>
+                    <h3>Head to Head</h3>
+                    <p>P1: WASD &bull; P2: Arrows</p>
+                </button>
+            </div>
+            <div class="game-legend">
+                <span>🐻 Bear</span>
+                <span>🫎 Moose</span>
+                <span>⛄ Snowman</span>
+                <span>🐧 Penguin</span>
+                <span>🪙 Coins</span>
+                <span>⭐ Star Power</span>
+                <span>☕ Speed Boost</span>
+                <span>❤️ Extra Life</span>
+            </div>
+        </div>
+        <div id="game-container" style="display:none;">
+            <canvas id="shred-canvas"></canvas>
+        </div>
+        <div id="game-over-screen" style="display:none;">
+            <div id="game-results"></div>
+            <div class="game-over-actions">
+                <button id="btn-restart" class="game-btn primary">🔄 Play Again</button>
+                <button id="btn-back-menu" class="game-btn">📋 Back to Menu</button>
+            </div>
+        </div>
+    </section>
+
     <!-- VIDEO COACH -->
     <section id="video-coach">
         <h2 class="section-title">🎥 Video Coach</h2>
@@ -235,6 +276,7 @@
     <script src="app.js"></script>
     <script src="interactive.js"></script>
     <script src="video-coach.js"></script>
+    <script src="shred-game.js"></script>
 </body>
 
 </html>
