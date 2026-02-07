@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEAKS → PODIUM | Cleo & Lila's Olympic Journey</title>
+    <meta name="description" content="Track Cleo and Lila's snowboard progression from beginner to the 2034 Winter Olympics in Salt Lake City.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="snow-canvas"></canvas>
+
+    <!-- NAV -->
+    <nav id="main-nav">
+        <div class="nav-brand">🏔️ PEAKS → PODIUM</div>
+        <div class="nav-links">
+            <a href="#hero">Home</a>
+            <a href="#riders">Riders</a>
+            <a href="#progression">Training</a>
+            <a href="#skill-tree">Skills</a>
+            <a href="#session-log">Log</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-mountains"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">PEAKS <span class="accent">→</span> PODIUM</h1>
+            <p class="hero-tagline">Cleo & Lila's road to the <strong>2034 Winter Olympics</strong> — Salt Lake City</p>
+            <div id="countdown" class="countdown">
+                <div class="countdown-unit"><span id="cd-days">0</span><small>DAYS</small></div>
+                <div class="countdown-unit"><span id="cd-hours">0</span><small>HOURS</small></div>
+                <div class="countdown-unit"><span id="cd-mins">0</span><small>MINS</small></div>
+                <div class="countdown-unit"><span id="cd-secs">0</span><small>SECS</small></div>
+            </div>
+            <p class="hero-sub">Also eyeing <strong>2038</strong> — Switzerland 🇨🇭</p>
+        </div>
+        <a href="#riders" class="scroll-cta">↓ Meet the Riders</a>
+    </section>
+
+    <!-- RIDER PROFILES -->
+    <section id="riders">
+        <h2 class="section-title">The Riders</h2>
+        <div class="riders-grid">
+            <!-- Cleo -->
+            <div class="rider-card" data-rider="cleo">
+                <div class="rider-avatar">🏂</div>
+                <h3>Cleo</h3>
+                <span class="rider-stance">Regular</span>
+                <div class="progress-ring-wrap">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="cleo"/>
+                    </svg>
+                    <span class="progress-pct" id="cleo-pct">0%</span>
+                </div>
+                <div class="discipline-select">
+                    <p class="label">Discipline Focus</p>
+                    <div class="discipline-chips" id="cleo-disciplines">
+                        <button class="chip" data-disc="halfpipe">Halfpipe</button>
+                        <button class="chip" data-disc="slopestyle">Slopestyle</button>
+                        <button class="chip" data-disc="bigair">Big Air</button>
+                        <button class="chip" data-disc="sbx">SBX</button>
+                        <button class="chip" data-disc="gs">Giant Slalom</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Lila -->
+            <div class="rider-card" data-rider="lila">
+                <div class="rider-avatar">🏂</div>
+                <h3>Lila</h3>
+                <span class="rider-stance">Regular</span>
+                <div class="progress-ring-wrap">
+                    <svg class="progress-ring" viewBox="0 0 120 120">
+                        <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
+                        <circle class="progress-ring-fill" cx="60" cy="60" r="52" data-rider="lila"/>
+                    </svg>
+                    <span class="progress-pct" id="lila-pct">0%</span>
+                </div>
+                <div class="discipline-select">
+                    <p class="label">Discipline Focus</p>
+                    <div class="discipline-chips" id="lila-disciplines">
+                        <button class="chip" data-disc="halfpipe">Halfpipe</button>
+                        <button class="chip" data-disc="slopestyle">Slopestyle</button>
+                        <button class="chip" data-disc="bigair">Big Air</button>
+                        <button class="chip" data-disc="sbx">SBX</button>
+                        <button class="chip" data-disc="gs">Giant Slalom</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRESSION TIMELINE -->
+    <section id="progression">
+        <h2 class="section-title">The 8-Phase Journey</h2>
+        <p class="section-sub">From falling leaf to Olympic podium — one phase at a time.</p>
+        <div class="timeline" id="timeline-container"></div>
+    </section>
+
+    <!-- SKILL TREE -->
+    <section id="skill-tree">
+        <h2 class="section-title">Skill Tree</h2>
+        <p class="section-sub">Watch skills light up as you progress. Each branch leads to the podium.</p>
+        <div class="tree-controls">
+            <button class="tree-rider-btn active" data-rider="cleo">Cleo</button>
+            <button class="tree-rider-btn" data-rider="lila">Lila</button>
+        </div>
+        <div class="skill-tree-container" id="skill-tree-vis"></div>
+    </section>
+
+    <!-- SESSION LOG -->
+    <section id="session-log">
+        <h2 class="section-title">Session Log</h2>
+        <p class="section-sub">Track every day on the mountain.</p>
+        <form id="log-form" class="log-form">
+            <div class="form-row">
+                <input type="date" id="log-date" required>
+                <select id="log-rider" required>
+                    <option value="">Rider</option>
+                    <option value="cleo">Cleo</option>
+                    <option value="lila">Lila</option>
+                </select>
+            </div>
+            <textarea id="log-notes" placeholder="What did you work on today?" required></textarea>
+            <div class="form-row">
+                <div class="rating-select">
+                    <span>Feeling:</span>
+                    <button type="button" class="rate-btn" data-val="1">😤</button>
+                    <button type="button" class="rate-btn" data-val="2">😐</button>
+                    <button type="button" class="rate-btn" data-val="3">🙂</button>
+                    <button type="button" class="rate-btn" data-val="4">😄</button>
+                    <button type="button" class="rate-btn" data-val="5">🔥</button>
+                </div>
+                <button type="submit" class="btn-primary">Log Session</button>
+            </div>
+        </form>
+        <div class="log-tabs">
+            <button class="log-tab active" data-rider="cleo">Cleo's Log</button>
+            <button class="log-tab" data-rider="lila">Lila's Log</button>
+        </div>
+        <div id="log-entries" class="log-entries"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>PEAKS → PODIUM &copy; 2026 — See you in Salt Lake City 2034 🥇</p>
+        <div class="footer-actions">
+            <button id="btn-export" class="btn-sm">Export Data</button>
+            <label class="btn-sm" for="btn-import">Import Data</label>
+            <input type="file" id="btn-import" accept=".json" hidden>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
