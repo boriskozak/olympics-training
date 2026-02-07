@@ -238,23 +238,34 @@ function getCurrentPhase(rider) {
 
 // ===== CELEBRATION EFFECTS =====
 function fireConfetti(x, y) {
-    const colors = ['#38bdf8', '#fbbf24', '#f472b6', '#34d399', '#a78bfa', '#fff'];
+    const snowflakes = ['❄', '❅', '❆', '✻', '✼', '❄️'];
+    const colors = ['#ffffff', '#e0f2fe', '#bae6fd', '#7dd3fc', '#38bdf8', '#a78bfa', '#c4b5fd'];
     const container = document.createElement('div');
-    container.style.cssText = `position:fixed;left:${x}px;top:${y}px;pointer-events:none;z-index:9999;`;
+    container.style.cssText = `position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;overflow:hidden;`;
     document.body.appendChild(container);
-    for (let i = 0; i < 30; i++) {
-        const p = document.createElement('div');
+    const count = 45;
+    for (let i = 0; i < count; i++) {
+        const flake = document.createElement('span');
+        const size = 12 + Math.random() * 22;
         const angle = (Math.random() * 360) * (Math.PI / 180);
-        const velocity = 80 + Math.random() * 120;
+        const burstDist = 60 + Math.random() * 160;
+        const driftX = (Math.random() - 0.5) * 120;
+        const fallDist = 200 + Math.random() * 400;
+        const spinEnd = (Math.random() - 0.5) * 1080;
         const color = colors[Math.floor(Math.random() * colors.length)];
-        p.style.cssText = `position:absolute;width:${4 + Math.random() * 6}px;height:${4 + Math.random() * 6}px;background:${color};border-radius:${Math.random() > 0.5 ? '50%' : '2px'};`;
-        container.appendChild(p);
-        p.animate([
-            { transform: 'translate(0,0) rotate(0deg)', opacity: 1 },
-            { transform: `translate(${Math.cos(angle) * velocity}px,${Math.sin(angle) * velocity - 50}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-        ], { duration: 800 + Math.random() * 400, easing: 'cubic-bezier(0,0,0.2,1)' });
+        const sym = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+        const duration = 1200 + Math.random() * 1000;
+        const delay = Math.random() * 200;
+        flake.textContent = sym;
+        flake.style.cssText = `position:absolute;left:${x}px;top:${y}px;font-size:${size}px;color:${color};text-shadow:0 0 6px rgba(56,189,248,0.6);filter:drop-shadow(0 0 3px rgba(255,255,255,0.4));line-height:1;`;
+        container.appendChild(flake);
+        flake.animate([
+            { transform: 'translate(0,0) rotate(0deg) scale(0.3)', opacity: 1 },
+            { transform: `translate(${Math.cos(angle) * burstDist * 0.5 + driftX * 0.3}px,${Math.sin(angle) * burstDist * 0.5}px) rotate(${spinEnd * 0.4}deg) scale(1.1)`, opacity: 1, offset: 0.25 },
+            { transform: `translate(${Math.cos(angle) * burstDist + driftX}px,${Math.sin(angle) * burstDist + fallDist}px) rotate(${spinEnd}deg) scale(0.6)`, opacity: 0 }
+        ], { duration, delay, easing: 'cubic-bezier(0.25,0.46,0.45,0.94)', fill: 'forwards' });
     }
-    setTimeout(() => container.remove(), 1500);
+    setTimeout(() => container.remove(), 2800);
 }
 
 function fireBigCelebration() {
