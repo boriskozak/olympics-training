@@ -248,7 +248,22 @@ function buildTimeline() {
             state[rider].skills[key] = cb.checked;
             saveState();
             updateProgress();
-            buildTimeline();
+            // Update progress bar & counter in-place (don't rebuild timeline)
+            const phaseNum = parseInt(key.split('_')[0].substring(1));
+            const phaseData = PHASES[phaseNum - 1];
+            if (phaseData) {
+                const card = cb.closest('.phase-card');
+                if (card) {
+                    const done = phaseData.skills.filter((_, i) => state[rider].skills[`p${phaseData.id}_s${i}`]).length;
+                    const total = phaseData.skills.length;
+                    const pct = Math.round((done / total) * 100);
+                    const fill = card.querySelector('.phase-progress-fill');
+                    if (fill) fill.style.width = pct + '%';
+                    const years = card.querySelector('.phase-years');
+                    if (years) years.textContent = `${phaseData.years} · ${done}/${total} skills`;
+                    card.classList.toggle('completed', pct === 100);
+                }
+            }
             renderSkillTree();
         });
     });
