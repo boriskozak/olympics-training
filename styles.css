@@ -1,16 +1,23 @@
-/* ===== DESIGN TOKENS ===== */
+/* ===== DESIGN TOKENS — WINTER OLYMPICS ===== */
 :root {
-    --bg-deep: #0a0e1a;
-    --bg-card: rgba(15, 23, 42, 0.7);
-    --bg-glass: rgba(30, 41, 59, 0.5);
-    --ice: #38bdf8;
-    --ice-glow: rgba(56, 189, 248, 0.3);
-    --gold: #fbbf24;
+    --bg-deep: #070b14;
+    --bg-card: rgba(12, 20, 38, 0.75);
+    --bg-glass: rgba(20, 32, 55, 0.55);
+    --ice: #60c5f7;
+    --ice-glow: rgba(96, 197, 247, 0.3);
+    --gold: #ffd700;
     --snow: #f1f5f9;
     --muted: #94a3b8;
-    --accent-pink: #f472b6;
-    --accent-green: #34d399;
-    --accent-purple: #a78bfa;
+    --accent-pink: #e63946;
+    --accent-green: #2dc653;
+    --accent-purple: #c4a7ff;
+    --silver: #c0c0c0;
+    --bronze: #cd7f32;
+    --olympic-blue: #0085c7;
+    --olympic-red: #e63946;
+    --olympic-yellow: #f4c430;
+    --olympic-green: #2dc653;
+    --olympic-black: #1a1a2e;
     --radius: 16px;
     --radius-sm: 8px;
     --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -59,9 +66,9 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 1rem 2rem;
-    background: rgba(10, 14, 26, 0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+    background: rgba(7, 11, 20, 0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 215, 0, 0.12);
 }
 
 .nav-brand {
@@ -103,7 +110,7 @@ section {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, var(--ice), var(--accent-purple));
+    background: linear-gradient(135deg, var(--gold), var(--ice));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -124,7 +131,45 @@ section {
     text-align: center;
     max-width: 100%;
     padding: 0 2rem;
-    background: linear-gradient(180deg, #0a0e1a 0%, #0f1729 50%, #111b30 100%);
+    background:
+        radial-gradient(ellipse 120% 40% at 20% 80%, rgba(0, 133, 199, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 50% at 80% 70%, rgba(45, 198, 83, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 30% at 50% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+        linear-gradient(180deg, #070b14 0%, #0c1528 40%, #0f1a30 70%, #101d35 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent 20%,
+            rgba(0, 133, 199, 0.03) 30%,
+            rgba(45, 198, 83, 0.025) 40%,
+            rgba(255, 215, 0, 0.02) 50%,
+            rgba(196, 167, 255, 0.025) 60%,
+            transparent 70%);
+    animation: auroraShimmer 12s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes auroraShimmer {
+
+    0%,
+    100% {
+        transform: translateX(-10%) skewX(-5deg);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: translateX(10%) skewX(5deg);
+        opacity: 1;
+    }
 }
 
 .hero-mountains {
@@ -133,7 +178,7 @@ section {
     left: 0;
     right: 0;
     height: 30vh;
-    background: linear-gradient(170deg, transparent 40%, rgba(56, 189, 248, 0.05) 60%, rgba(56, 189, 248, 0.02) 100%);
+    background: linear-gradient(170deg, transparent 30%, rgba(255, 215, 0, 0.04) 50%, rgba(96, 197, 247, 0.03) 70%, rgba(96, 197, 247, 0.01) 100%);
     clip-path: polygon(0% 100%, 5% 60%, 15% 80%, 25% 40%, 35% 65%, 45% 25%, 55% 55%, 65% 30%, 75% 60%, 85% 35%, 95% 70%, 100% 50%, 100% 100%);
 }
 
@@ -148,7 +193,7 @@ section {
     font-size: clamp(3rem, 8vw, 6rem);
     letter-spacing: -2px;
     line-height: 1;
-    background: linear-gradient(135deg, #fff 0%, var(--ice) 50%, var(--accent-purple) 100%);
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 40%, var(--ice) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
@@ -157,16 +202,17 @@ section {
 
 @keyframes titleGlow {
     from {
-        filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.3));
+        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.3));
     }
 
     to {
-        filter: drop-shadow(0 0 40px rgba(167, 139, 250, 0.4));
+        filter: drop-shadow(0 0 40px rgba(96, 197, 247, 0.4));
     }
 }
 
 .accent {
     -webkit-text-fill-color: var(--gold);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
 }
 
 .hero-tagline {
@@ -189,6 +235,65 @@ section {
     color: var(--accent-green);
 }
 
+/* Olympic Rings & Badge */
+.olympic-rings {
+    margin: 1rem auto 0.5rem;
+    text-align: center;
+    animation: ringsBreath 4s ease-in-out infinite alternate;
+}
+
+@keyframes ringsBreath {
+    from {
+        filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.15));
+        opacity: 0.85;
+    }
+
+    to {
+        filter: drop-shadow(0 0 16px rgba(96, 197, 247, 0.25));
+        opacity: 1;
+    }
+}
+
+.olympics-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255, 215, 0, 0.06);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 12px;
+    padding: 0.6rem 1.5rem;
+    margin: 0.75rem auto 1.5rem;
+    backdrop-filter: blur(8px);
+}
+
+.badge-year {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: 3px;
+}
+
+.badge-city {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: var(--snow);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.badge-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.55rem;
+    color: var(--muted);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
 /* Countdown */
 .countdown {
     display: flex;
@@ -199,7 +304,7 @@ section {
 
 .countdown-unit {
     background: var(--bg-glass);
-    border: 1px solid rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.15);
     backdrop-filter: blur(10px);
     border-radius: var(--radius);
     padding: 1.2rem 1.5rem;
@@ -212,14 +317,14 @@ section {
 
 .countdown-unit:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 30px var(--ice-glow);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.15);
 }
 
 .countdown-unit span {
     font-family: var(--font-heading);
     font-weight: 900;
     font-size: 2.5rem;
-    color: var(--ice);
+    color: var(--gold);
 }
 
 .countdown-unit small {
@@ -259,17 +364,31 @@ section {
 
 .rider-card {
     background: var(--bg-card);
-    border: 1px solid rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.1);
     backdrop-filter: blur(10px);
     border-radius: var(--radius);
     padding: 2rem;
     text-align: center;
-    transition: transform var(--transition), box-shadow var(--transition);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.rider-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--olympic-blue), var(--olympic-yellow), var(--olympic-red), var(--olympic-green), var(--olympic-black));
+    opacity: 0.7;
 }
 
 .rider-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(56, 189, 248, 0.15);
+    box-shadow: 0 12px 40px rgba(255, 215, 0, 0.12), 0 0 20px rgba(96, 197, 247, 0.08);
+    border-color: rgba(255, 215, 0, 0.25);
 }
 
 .rider-avatar {
@@ -314,12 +433,13 @@ section {
 
 .progress-ring-fill {
     fill: none;
-    stroke: var(--ice);
+    stroke: var(--gold);
     stroke-width: 8;
     stroke-linecap: round;
     stroke-dasharray: 326.73;
     stroke-dashoffset: 326.73;
     transition: stroke-dashoffset 1s ease;
+    filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.3));
 }
 
 .progress-pct {
@@ -330,7 +450,7 @@ section {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1.3rem;
-    color: var(--ice);
+    color: var(--gold);
 }
 
 .discipline-select {
@@ -709,9 +829,9 @@ section {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--ice), var(--accent-purple));
+    background: linear-gradient(135deg, var(--gold), #e6a800);
     border: none;
-    color: #fff;
+    color: var(--bg-deep);
     padding: 0.6rem 1.8rem;
     border-radius: var(--radius-sm);
     font-family: var(--font-heading);
@@ -724,7 +844,7 @@ section {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px var(--ice-glow);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
 }
 
 .log-tabs {
@@ -809,9 +929,45 @@ footer {
     z-index: 1;
     text-align: center;
     padding: 3rem 2rem;
-    border-top: 1px solid rgba(56, 189, 248, 0.08);
+    border-top: 1px solid rgba(255, 215, 0, 0.1);
     color: var(--muted);
     font-size: 0.85rem;
+}
+
+.footer-rings {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.footer-ring {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2.5px solid;
+    opacity: 0.5;
+}
+
+.footer-ring:nth-child(1) {
+    border-color: var(--olympic-blue);
+}
+
+.footer-ring:nth-child(2) {
+    border-color: var(--olympic-yellow);
+}
+
+.footer-ring:nth-child(3) {
+    border-color: var(--olympic-black);
+    border-color: #555;
+}
+
+.footer-ring:nth-child(4) {
+    border-color: var(--olympic-green);
+}
+
+.footer-ring:nth-child(5) {
+    border-color: var(--olympic-red);
 }
 
 .footer-actions {
@@ -834,8 +990,8 @@ footer {
 }
 
 .btn-sm:hover {
-    border-color: var(--ice);
-    color: var(--ice);
+    border-color: var(--gold);
+    color: var(--gold);
 }
 
 /* ===== RIDER STATS / XP / STREAK ===== */
@@ -1152,7 +1308,7 @@ footer {
 
 .badge {
     background: var(--bg-card);
-    border: 1px solid rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.08);
     border-radius: var(--radius);
     padding: 1.2rem 0.75rem;
     text-align: center;
@@ -1160,18 +1316,18 @@ footer {
 }
 
 .badge.unlocked {
-    border-color: rgba(251, 191, 36, 0.3);
-    background: rgba(251, 191, 36, 0.05);
+    border-color: rgba(255, 215, 0, 0.35);
+    background: rgba(255, 215, 0, 0.06);
     animation: badgeGlow 2s ease-in-out infinite alternate;
 }
 
 @keyframes badgeGlow {
     from {
-        box-shadow: 0 0 5px rgba(251, 191, 36, 0.1);
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.15), inset 0 0 10px rgba(255, 215, 0, 0.03);
     }
 
     to {
-        box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.25), inset 0 0 15px rgba(255, 215, 0, 0.05);
     }
 }
 
