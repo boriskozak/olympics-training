@@ -24,6 +24,7 @@ q
         <div class="nav-brand">🏔️ PEAKS → PODIUM</div>
         <div class="nav-links">
             <a href="#hero">Home</a>
+            <a href="#mountain-conditions">Conditions</a>
             <a href="#riders">Riders</a>
             <a href="#daily-challenge-section">Challenges</a>
             <a href="#progression">Training</a>
@@ -69,7 +70,52 @@ q
             </div>
             <p class="hero-sub">Also eyeing <strong>2038</strong> — Switzerland 🇨🇭</p>
         </div>
-        <a href="#riders" class="scroll-cta">↓ Meet the Riders</a>
+        <a href="#mountain-conditions" class="scroll-cta">↓ Check Conditions</a>
+    </section>
+
+    <!-- MOUNTAIN CONDITIONS -->
+    <section id="mountain-conditions">
+        <h2 class="section-title">🏔️ Mountain Conditions</h2>
+        <p class="section-sub">Real-time training conditions across your mountains. Updated hourly.</p>
+
+        <!-- Overall Shred Score Gauge -->
+        <div class="conditions-overview">
+            <div class="shred-gauge-wrap">
+                <svg id="overall-shred-gauge" class="shred-gauge" viewBox="0 0 160 100">
+                    <path d="M 10 90 A 70 70 0 0 1 150 90" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"
+                        stroke-linecap="round" />
+                    <path class="gauge-arc-fill" d="M 10 90 A 70 70 0 0 1 150 90" fill="none" stroke="var(--ice)"
+                        stroke-width="10" stroke-linecap="round"
+                        style="stroke-dasharray: 219.91; stroke-dashoffset: 219.91;" />
+                </svg>
+                <div class="shred-gauge-text">
+                    <span class="shred-gauge-num" id="overall-shred-value">0</span>
+                    <span class="shred-gauge-label" id="overall-shred-label">Loading...</span>
+                </div>
+            </div>
+            <div class="conditions-meta">
+                <p class="best-pick" id="best-mountain-pick">Calculating...</p>
+                <span class="conditions-ts" id="conditions-timestamp">Updating...</span>
+                <button class="conditions-refresh-btn" id="conditions-refresh" title="Refresh">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M21 2v6h-6" />
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                        <path d="M3 22v-6h6" />
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mountain Cards Grid -->
+        <div id="conditions-grid" class="conditions-grid"></div>
+
+        <!-- 7-Day Snowfall Forecast -->
+        <div class="forecast-wrap">
+            <h3 class="forecast-title">❄️ 7-Day Snowfall Forecast</h3>
+            <canvas id="forecast-canvas" class="forecast-canvas"></canvas>
+        </div>
     </section>
 
     <!-- RIDER PROFILES -->
@@ -307,6 +353,7 @@ q
     <script src="interactive.js"></script>
     <script src="video-coach.js"></script>
 
+    <script src="mountain-conditions.js"></script>
     <script src="shred-game.js"></script>
 </body>
 

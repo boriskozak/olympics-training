@@ -923,6 +923,351 @@ section {
     padding: 2rem;
 }
 
+/* ===== MOUNTAIN CONDITIONS ===== */
+.conditions-overview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.shred-gauge-wrap {
+    position: relative;
+    width: 200px;
+    height: 120px;
+}
+
+.shred-gauge {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 12px var(--ice-glow));
+}
+
+.gauge-arc-fill {
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.5s ease;
+}
+
+.shred-gauge-text {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shred-gauge-num {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--ice);
+}
+
+.shred-gauge-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+}
+
+.conditions-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.best-pick {
+    font-size: 1.1rem;
+    color: var(--snow);
+}
+
+.best-pick strong {
+    color: var(--gold);
+}
+
+.conditions-ts {
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.conditions-refresh-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+}
+
+.conditions-refresh-btn:hover {
+    border-color: var(--ice);
+    color: var(--ice);
+    background: rgba(96, 197, 247, 0.08);
+}
+
+.conditions-refresh-btn.spinning svg {
+    animation: spinRefresh 0.6s ease;
+}
+
+@keyframes spinRefresh {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Mountain Cards Grid */
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.mtn-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(96, 197, 247, 0.08);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.mtn-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--olympic-blue), var(--ice));
+    opacity: 0.5;
+}
+
+.mtn-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(96, 197, 247, 0.1);
+    border-color: rgba(96, 197, 247, 0.2);
+}
+
+.mtn-card--best {
+    border-color: rgba(255, 215, 0, 0.25);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.06);
+}
+
+.mtn-card--best::before {
+    background: linear-gradient(90deg, var(--gold), var(--olympic-yellow), var(--gold));
+    opacity: 0.8;
+}
+
+.mtn-card--home {
+    border-color: rgba(45, 198, 83, 0.2);
+}
+
+.mtn-card--home::before {
+    background: linear-gradient(90deg, var(--accent-green), var(--ice), var(--accent-green));
+    opacity: 0.7;
+}
+
+.mtn-best-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: var(--gold);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    animation: badgePulse 2s ease-in-out infinite alternate;
+}
+
+.mtn-home-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(45, 198, 83, 0.12);
+    border: 1px solid rgba(45, 198, 83, 0.25);
+    color: var(--accent-green);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+@keyframes badgePulse {
+    from {
+        box-shadow: 0 0 6px rgba(255, 215, 0, 0.1);
+    }
+
+    to {
+        box-shadow: 0 0 16px rgba(255, 215, 0, 0.25);
+    }
+}
+
+.mtn-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.mtn-name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.mtn-emoji {
+    font-size: 2rem;
+}
+
+.mtn-name h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--snow);
+}
+
+.mtn-terrain {
+    font-size: 0.72rem;
+    color: var(--muted);
+}
+
+.mtn-score {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.mtn-score-ring {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px var(--score-color, var(--ice)));
+}
+
+.mtn-score-num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--snow);
+}
+
+.mtn-condition-bar {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--snow);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.mtn-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.mtn-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mtn-stat-icon {
+    font-size: 1.2rem;
+}
+
+.mtn-stat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.mtn-stat-val {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--snow);
+}
+
+.mtn-stat-lbl {
+    font-size: 0.65rem;
+    color: var(--muted);
+}
+
+.mtn-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mtn-detail-chip {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.mtn-detail-chip.snow-quality {
+    border-color: rgba(96, 197, 247, 0.15);
+    color: var(--ice);
+}
+
+/* Forecast */
+.forecast-wrap {
+    background: var(--bg-card);
+    border: 1px solid rgba(96, 197, 247, 0.08);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.forecast-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--snow);
+}
+
+.forecast-canvas {
+    width: 100%;
+    height: 160px;
+    display: block;
+}
+
 /* ===== FOOTER ===== */
 footer {
     position: relative;
