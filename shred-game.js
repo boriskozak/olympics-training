@@ -679,7 +679,8 @@
             this.animFrame = null;
             this.gameOverShown = false;
             this.keys = {};
-            this.highScore = parseInt(localStorage.getItem('shredHighScore') || '0');
+            const savedScore = parseInt(localStorage.getItem('shredHighScore') || '0');
+            this.highScore = Number.isFinite(savedScore) ? savedScore : 0;
 
             // Player state
             this.player = null;
