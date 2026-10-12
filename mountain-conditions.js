@@ -26,8 +26,8 @@
         66: 'Freezing Rain 🧊', 67: 'Freezing Rain 🧊',
         71: 'Light Snow 🌨️', 73: 'Snowing ❄️', 75: 'Heavy Snow ❄️',
         77: 'Snow Grains ❄️',
-        80: 'Rain Showers �️', 81: 'Rain Showers 🌦️', 82: 'Heavy Showers 🌦️',
-        85: 'Snow Showers �🌨️', 86: 'Heavy Snow ❄️',
+        80: 'Rain Showers 🌧️', 81: 'Rain Showers 🌦️', 82: 'Heavy Showers 🌦️',
+        85: 'Snow Showers 🌨️', 86: 'Heavy Snow ❄️',
         95: 'Thunderstorm ⛈️', 96: 'Thunderstorm w/ Hail ⛈️', 99: 'Thunderstorm w/ Hail ⛈️'
     };
 
